@@ -3,10 +3,9 @@
 @tailwind utilities;
 
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif, Noto Sans Lao Looped;
   line-height: 1.5;
   font-weight: 400;
-
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
   background-color: #242424;
@@ -15,4 +14,36 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  overflow-y: scroll; /* Always show scrollbar */
+}
+
+/* Width of the scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  position: absolute;
+  z-index: 9999; /* Ensure it overlays other content */
+}
+
+/* Track (background) of the scrollbar */
+::-webkit-scrollbar-track {
+  background: none; /* Set track background to none to make it transparent */
+}
+
+/* Handle (thumb) of the scrollbar */
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #FFF;
+}
+
+/* Handle when scrollbar is active (clicked on) */
+::-webkit-scrollbar-thumb:active {
+  background: #e4e4e4;
 }

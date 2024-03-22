@@ -30,7 +30,7 @@ const Login = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen bg-blue-900 text-white">
+    <div className="flex flex-col items-center justify-center h-screen text-white">
       <h1 className="text-4xl font-bold mb-8">Login</h1>
       <div className="flex flex-col space-y-4">
         <input
