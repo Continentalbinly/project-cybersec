@@ -5,6 +5,8 @@ import Login from "./screen/auth/Login";
 import Register from "./screen/auth/Register";
 import ProtectedRoute from "./components/authNavigator/protectedRoute";
 import PublicRoute from "./components/authNavigator/publicRoute";
+import PageManager from "./screen/PageManager";
+import Feuature from "./screen/page/Feuature";
 
 function App() {
   return (
@@ -14,7 +16,19 @@ function App() {
           path="/"
           element={
             <ProtectedRoute>
-              <Home />
+              <PageManager>
+                <Home />
+              </PageManager>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/feuature"
+          element={
+            <ProtectedRoute>
+              <PageManager>
+                <Feuature />
+              </PageManager>
             </ProtectedRoute>
           }
         />
