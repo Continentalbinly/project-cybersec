@@ -4,7 +4,7 @@ import axios from "axios";
 import { AuthContext } from "../../context/authContext";
 
 const Login = () => {
-  const [,setState] = useContext(AuthContext); // Destructuring state not required
+  const [, setState] = useContext(AuthContext); // Destructuring state not required
   const [userId, setUserId] = useState("");
   const [passWord, setPassWord] = useState("");
   const [loading, setLoading] = useState(false);
@@ -21,11 +21,12 @@ const Login = () => {
       setState(data); // Update state with user data directly
       console.log("Login success:", data);
       localStorage.setItem("@auth", JSON.stringify(data)); // Update localStorage key
-      setLoading(false);
     } catch (error) {
       console.error("Login error:", error);
       alert(error.message);
+    } finally {
       setLoading(false);
+      window.location.reload(); // Reload the page after loading is set to false
     }
   };
 

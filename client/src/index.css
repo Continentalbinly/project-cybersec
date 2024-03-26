@@ -16,34 +16,51 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-body {
-  overflow-y: scroll; /* Always show scrollbar */
-}
 
-/* Width of the scrollbar */
-::-webkit-scrollbar {
+/* ::-webkit-scrollbar {
   width: 8px;
   position: absolute;
-  z-index: 9999; /* Ensure it overlays other content */
+  z-index: 9999; 
 }
 
-/* Track (background) of the scrollbar */
 ::-webkit-scrollbar-track {
-  background: none; /* Set track background to none to make it transparent */
+  background: none; 
 }
 
-/* Handle (thumb) of the scrollbar */
 ::-webkit-scrollbar-thumb {
   background: #888;
   border-radius: 4px;
 }
 
-/* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #FFF;
 }
 
-/* Handle when scrollbar is active (clicked on) */
 ::-webkit-scrollbar-thumb:active {
   background: #e4e4e4;
+} */
+
+::-webkit-scrollbar {
+  width: 8px;
 }
+
+::-webkit-scrollbar-track {
+  background: #242424;
+}
+
+::-webkit-scrollbar-thumb {
+  background: none;
+}
+
+::-webkit-scrollbar-thumb:active {
+  background: #ffffff;
+}
+
+::-webkit-scrollbar-thumb:vertical {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+::-webkit-scrollbar-thumb:vertical:hover {
+  background-color: rgba(255, 255, 255, 0.4);
+}
+
