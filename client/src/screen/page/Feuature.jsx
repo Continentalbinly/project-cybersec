@@ -2,7 +2,7 @@ import React from "react";
 
 function Feuature() {
   return (
-    <section className="max-w-3xl mx-auto">
+    <section>
       <h2 className="text-3xl font-semibold mb-4">Cybersecurity Awareness</h2>
       <p className="text-lg mb-4">
         In today's digital world, cybersecurity is more important than ever. Our
