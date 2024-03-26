@@ -1,55 +1,47 @@
-import { Route, Routes } from "react-router-dom";
-import { AuthProvider } from "./context/authContext";
+import { Route, Routes, BrowserRouter, Navigate } from "react-router-dom";
 import Home from "./screen/page/Home";
 import Login from "./screen/auth/Login";
 import Register from "./screen/auth/Register";
-import ProtectedRoute from "./components/authNavigator/protectedRoute";
-import PublicRoute from "./components/authNavigator/publicRoute";
-import PageManager from "./screen/PageManager";
 import Feuature from "./screen/page/Feuature";
+import Navbar from "./components/Header";
+import Footer from "./components/Footer";
+import PrivateRoutes from "./Routes/privateRoutes";
+import PublicRoutes from "./Routes/publicRoutes";
+import Error from "./screen/page/error";
+import Sidebar from "./components/Sidebar";
 
 function App() {
   return (
-    <AuthProvider>
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <ProtectedRoute>
-              <PageManager>
-                <Home />
-              </PageManager>
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/feuature"
-          element={
-            <ProtectedRoute>
-              <PageManager>
-                <Feuature />
-              </PageManager>
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/login"
-          element={
-            <PublicRoute>
-              <Login />
-            </PublicRoute>
-          }
-        />
-        <Route
-          path="/register"
-          element={
-            <PublicRoute>
-              <Register />
-            </PublicRoute>
-          }
-        />
-      </Routes>
-    </AuthProvider>
+    <div className="App">
+      <BrowserRouter>
+        <Routes>
+          <Route
+            element={
+              <>
+                <Navbar />
+                <Sidebar />
+                <div className="min-h-screen">
+                  <main className="container mx-auto py-24">
+                    <section className="max-w-3xl mx-auto">
+                      <PrivateRoutes />
+                    </section>
+                  </main>
+                </div>
+                <Footer />
+              </>
+            }
+          >
+            <Route path="/" element={<Home />} />
+            <Route path="/feuature" element={<Feuature />} />
+            <Route path="*" element={<Error />} />
+          </Route>
+          <Route element={<PublicRoutes />}>
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </div>
   );
 }
 
