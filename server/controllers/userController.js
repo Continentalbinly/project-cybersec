@@ -48,53 +48,62 @@ const getUserController = async (req, res) => {
 //register
 const registerController = async (req, res) => {
   try {
-    const { userName, userId, passWord } = req.body;
-    //validation
-    if (!userName) {
-      return res.status(400).send({
-        success: false,
-        message: "userName is required",
-      });
-    }
-    if (!userId) {
-      return res.status(400).send({
-        success: false,
-        message: "userId is required",
-      });
-    }
-    if (!passWord || passWord.length < 6) {
-      return res.status(400).send({
-        success: false,
-        message: "passWord is required and 6 character long",
-      });
-    }
-    //exisiting user
-    const exisitingUser = await userModel.findOne({ userId });
-    if (exisitingUser) {
-      return res.status(500).send({
-        success: false,
-        message: "User Already Registered With This userId",
-      });
-    }
-    //hashed password
-    const hashPassWord = await hashPassword(passWord);
-
-    //save user
-    const user = await userModel({
+    const {
       userName,
+      userSurname,
+      userBirthday,
+      userEmail,
       userId,
-      passWord: hashPassWord,
-    }).save();
+      passWord,
+    } = req.body;
+    // Validation
+    if (
+      !userName ||
+      !userSurname ||
+      !userBirthday ||
+      !userEmail ||
+      !userId ||
+      !passWord
+    ) {
+      return res.status(400).send({
+        success: false,
+        message: "All required fields are mandatory",
+      });
+    }
+
+    // Check if the user already exists
+    const existingUser = await userModel.findOne({ userId });
+    if (existingUser) {
+      return res.status(400).send({
+        success: false,
+        message: "User with this userId already exists",
+      });
+    }
+
+    // Hash the password
+    const hashedPassword = await hashPassword(passWord);
+
+    // Create new user
+    const newUser = await userModel.create({
+      userName,
+      userSurname,
+      userBirthday,
+      userEmail,
+      userId,
+      passWord: hashedPassword,
+    });
+
     return res.status(201).send({
       success: true,
-      message: "Registeration Successfull",
+      message: "Registration successful",
+      user: newUser,
     });
   } catch (error) {
-    console.log(error);
+    console.error("Error in registerController:", error);
     return res.status(500).send({
       success: false,
-      message: "Error in Register API",
-      error,
+      message: "Internal server error",
+      error: error.message,
     });
   }
 };

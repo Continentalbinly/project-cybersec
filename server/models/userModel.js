@@ -7,6 +7,21 @@ const userSchema = new mongoose.Schema(
       required: [true, "Please add userName"],
       trim: true,
     },
+    userSurname: {
+      type: String,
+      required: [true, "Please add userSurname"],
+      trim: true,
+    },
+    userBirthday: {
+      type: Date,
+      required: [true, "Please add userBirthday"],
+      trim: true,
+    },
+    userEmail: {
+      type: String,
+      required: [true, "Please add userEmail"],
+      trim: true,
+    },
     userId: {
       type: String,
       required: [true, "Please add userId"],
@@ -28,6 +43,14 @@ const userSchema = new mongoose.Schema(
       default: 0,
     },
     point: {
+      type: Number,
+      default: 0,
+    },
+    task: {
+      type: Number,
+      default: 0,
+    },
+    finishTask: {
       type: Number,
       default: 0,
     },
