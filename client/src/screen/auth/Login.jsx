@@ -62,6 +62,14 @@ const Login = () => {
           Register
         </Link>
       </p>
+      <p>Or</p>
+      <button
+        className="w-56 py-2 bg-gray-500 rounded mt-4"
+        onClick={handleSubmit}
+        disabled={loading}
+      >
+        {loading ? "Loading..." : "Guest"}
+      </button>
     </div>
   );
 };

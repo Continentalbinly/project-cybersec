@@ -2,79 +2,75 @@ import React from "react";
 
 function Home() {
   return (
-    <section >
-      <h2 className="text-3xl font-semibold mb-4">
-        Welcome to Cybersecurity Awareness
-      </h2>
-      <p className="text-lg mb-4">
-        In today's digital world, cybersecurity is more important than ever. Our
-        website is dedicated to providing you with valuable information, tips,
-        and resources to help you stay safe and secure online.
-      </p>
-      <p className="text-lg mb-4">
-        Whether you're an individual user, a business owner, or just interested
-        in cybersecurity, we have the tools and knowledge you need to protect
-        yourself and your data from cyber threats.
-      </p>
-      <p className="text-lg mb-4">
-        Explore our website to learn about best practices for password security,
-        how to spot phishing scams, the importance of data privacy, and much
-        more.
-      </p>
-      <h2 className="text-3xl font-semibold mb-4">
-        Welcome to Cybersecurity Awareness
-      </h2>
-      <p className="text-lg mb-4">
-        In today's digital world, cybersecurity is more important than ever. Our
-        website is dedicated to providing you with valuable information, tips,
-        and resources to help you stay safe and secure online.
-      </p>
-      <p className="text-lg mb-4">
-        Whether you're an individual user, a business owner, or just interested
-        in cybersecurity, we have the tools and knowledge you need to protect
-        yourself and your data from cyber threats.
-      </p>
-      <p className="text-lg mb-4">
-        Explore our website to learn about best practices for password security,
-        how to spot phishing scams, the importance of data privacy, and much
-        more.
-      </p>
-      <h2 className="text-3xl font-semibold mb-4">
-        Welcome to Cybersecurity Awareness
-      </h2>
-      <p className="text-lg mb-4">
-        In today's digital world, cybersecurity is more important than ever. Our
-        website is dedicated to providing you with valuable information, tips,
-        and resources to help you stay safe and secure online.
-      </p>
-      <p className="text-lg mb-4">
-        Whether you're an individual user, a business owner, or just interested
-        in cybersecurity, we have the tools and knowledge you need to protect
-        yourself and your data from cyber threats.
-      </p>
-      <p className="text-lg mb-4">
-        Explore our website to learn about best practices for password security,
-        how to spot phishing scams, the importance of data privacy, and much
-        more.
-      </p>
-      <h2 className="text-3xl font-semibold mb-4">
-        Welcome to Cybersecurity Awareness
-      </h2>
-      <p className="text-lg mb-4">
-        In today's digital world, cybersecurity is more important than ever. Our
-        website is dedicated to providing you with valuable information, tips,
-        and resources to help you stay safe and secure online.
-      </p>
-      <p className="text-lg mb-4">
-        Whether you're an individual user, a business owner, or just interested
-        in cybersecurity, we have the tools and knowledge you need to protect
-        yourself and your data from cyber threats.
-      </p>
-      <p className="text-lg mb-4">
-        Explore our website to learn about best practices for password security,
-        how to spot phishing scams, the importance of data privacy, and much
-        more.
-      </p>
+    <section>
+      <div className="flex justify-center">
+        <h2 className="text-3xl font-semibold">
+          Welcome to Cybersecurity Awareness
+        </h2>
+      </div>
+      <br />
+      <div>
+        <h4 className="text-xl font-semibold">ຄອດສ໌ຮຽນທັ້ງໝົດ</h4>
+      </div>
+      <br />
+      <div className="w-full flex justify-center">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-4">
+          <div className="rounded w-full h-auto p-2 bg-gray-800 cursor-pointer hover:bg-gray-700">
+            <img
+              className="rounded"
+              src="https://cxotoday.com/wp-content/uploads/2023/05/Cybersecurity.jpeg"
+              alt="Cybersecurity"
+            />
+            <div className="pt-3 text-[16px]">ພື້ນຖານຄວາມປອດໄພ</div>
+            <div className="pt-1 text-[12px]">Tittle:</div>
+            <div className="pt-1 text-[12px]">Lesson:</div>
+            <div className="pt-1 text-[12px]">Task:</div>
+            <div className="pt-1 text-[12px]">Total Point:</div>
+          </div>
+          <div className="rounded w-full h-auto p-2 bg-gray-800 cursor-pointer hover:bg-gray-700">
+            <div className="rounded w-full h-auto p-2 bg-gray-800 cursor-pointer hover:bg-gray-700">
+              <img
+                className="rounded"
+                src="https://cxotoday.com/wp-content/uploads/2023/05/Cybersecurity.jpeg"
+                alt="Cybersecurity"
+              />
+              <div className="pt-3 text-[16px]">ພື້ນຖານຄວາມປອດໄພ</div>
+              <div className="pt-1 text-[12px]">Tittle:</div>
+              <div className="pt-1 text-[12px]">Lesson:</div>
+              <div className="pt-1 text-[12px]">Task:</div>
+              <div className="pt-1 text-[12px]">Total Point:</div>
+            </div>
+          </div>
+          <div className="rounded w-full h-auto p-2 bg-gray-800 cursor-pointer hover:bg-gray-700">
+            <div className="rounded w-full h-auto p-2 bg-gray-800 cursor-pointer hover:bg-gray-700">
+              <img
+                className="rounded"
+                src="https://cxotoday.com/wp-content/uploads/2023/05/Cybersecurity.jpeg"
+                alt="Cybersecurity"
+              />
+              <div className="pt-3 text-[16px]">ພື້ນຖານຄວາມປອດໄພ</div>
+              <div className="pt-1 text-[12px]">Tittle:</div>
+              <div className="pt-1 text-[12px]">Lesson:</div>
+              <div className="pt-1 text-[12px]">Task:</div>
+              <div className="pt-1 text-[12px]">Total Point:</div>
+            </div>
+          </div>
+          <div className="rounded w-full h-auto p-2 bg-gray-800 cursor-pointer hover:bg-gray-700">
+            <div className="rounded w-full h-auto p-2 bg-gray-800 cursor-pointer hover:bg-gray-700">
+              <img
+                className="rounded"
+                src="https://cxotoday.com/wp-content/uploads/2023/05/Cybersecurity.jpeg"
+                alt="Cybersecurity"
+              />
+              <div className="pt-3 text-[16px]">ພື້ນຖານຄວາມປອດໄພ</div>
+              <div className="pt-1 text-[12px]">Tittle:</div>
+              <div className="pt-1 text-[12px]">Lesson:</div>
+              <div className="pt-1 text-[12px]">Task:</div>
+              <div className="pt-1 text-[12px]">Total Point:</div>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
   );
 }

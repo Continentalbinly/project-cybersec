@@ -7,6 +7,9 @@ import PrivateRoutes from "./Routes/privateRoutes";
 import PublicRoutes from "./Routes/publicRoutes";
 import Error from "./screen/page/error";
 import PageManager from "./screen/PageManager";
+import AdminDashboard from "./screen/page/Admin/AdminDashboard";
+import AdminRoutes from "./Routes/adminRotes";
+import Profile from "./screen/page/User/Profile";
 
 function App() {
   return (
@@ -23,6 +26,10 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/feuature" element={<Feuature />} />
             <Route path="*" element={<Error />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route element={<AdminRoutes />}>
+              <Route path="/admin" element={<AdminDashboard />} />
+            </Route>
           </Route>
           <Route element={<PublicRoutes />}>
             <Route path="/login" element={<Login />} />

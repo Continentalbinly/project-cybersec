@@ -15,7 +15,6 @@ const AuthProvider = ({ children }) => {
   // Default axios setting
   axios.defaults.baseURL = "http://localhost:8080/api/v1";
 
-  // Load initial local storage data
   useEffect(() => {
     const loadLocalStorageData = async () => {
       try {
@@ -28,8 +27,18 @@ const AuthProvider = ({ children }) => {
         console.error("Error loading local storage data:", error);
       }
     };
+
     loadLocalStorageData();
-  }, []);
+    const handleStorageChange = () => {
+      loadLocalStorageData(); // Refresh data when storage changes
+    };
+    window.addEventListener("storage", handleStorageChange);
+
+    // Cleanup by removing the event listener when the component unmounts
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+    };
+  }, []); // Empty dependency array ensures it only runs once on mount
 
   return (
     <AuthContext.Provider value={[state, setState]}>

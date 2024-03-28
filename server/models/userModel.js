@@ -21,7 +21,20 @@ const userSchema = new mongoose.Schema(
     },
     role: {
       type: String,
-      default: "user",
+      default: "guest",
+    },
+    score: {
+      type: Number,
+      default: 0,
+    },
+    point: {
+      type: Number,
+      default: 0,
+    },
+    userImg: {
+      type: String,
+      default:
+        "https://w7.pngwing.com/pngs/174/296/png-transparent-anonymous-logo-hacktivism-anonymous-mask-white-people-monochrome.png",
     },
   },
   { timestamps: true }

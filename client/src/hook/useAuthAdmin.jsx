@@ -1,35 +1,32 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-export const useAuth = () => {
-  const [authenticated, setAuthenticated] = useState(false);
+export const useAuthAdmin = () => {
+  const [isAdmin, setIsAdmin] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
-  axios.defaults.baseURL = "http://localhost:8080/api/v1";
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
         const authData = JSON.parse(localStorage.getItem("@auth"));
-        const token = authData?.token; 
-        console.log("Token retrieved from localStorage:", token);
+        const token = authData?.token;
+        console.log("Token localStorage:", token);
+
         if (token) {
           const response = await axios.get("/auth/fetchuser", {
             headers: {
               Authorization: `Bearer ${token}`,
             },
           });
-          if (response.data.success) {
-            console.log("User data fetched successfully");
-            setAuthenticated(true);
+          console.log("Role from Api:", response.data.user.role);
+          if (response.data.success && response.data.user.role === "admin") {
+            setIsAdmin(true);
           } else {
-            console.log("Failed to fetch user data");
-            setAuthenticated(false);
+            setIsAdmin(false);
           }
         } else {
-          console.log("No token found in localStorage");
-          setAuthenticated(false);
+          setIsAdmin(false);
         }
       } catch (error) {
         console.error("Error fetching user data:", error);
@@ -38,10 +35,9 @@ export const useAuth = () => {
         setLoading(false);
       }
     };
-    
+
     fetchUserData();
   }, []);
 
-  return { authenticated, loading, error };
+  return { isAdmin, loading, error };
 };
-
