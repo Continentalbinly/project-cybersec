@@ -2,8 +2,11 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
-const Register = ({}) => {
+const Register = () => {
   const [userName, setUserName] = useState("");
+  const [userSurname, setUserSurname] = useState("");
+  const [userBirthday, setUserBirthday] = useState("");
+  const [userEmail, setUserEmail] = useState("");
   const [userId, setUserId] = useState("");
   const [passWord, setPassWord] = useState("");
   const [loading, setLoading] = useState(false);
@@ -15,7 +18,14 @@ const Register = ({}) => {
       setLoading(true);
       setError("");
 
-      if (!userName || !userId || !passWord) {
+      if (
+        !userName ||
+        !userSurname ||
+        !userBirthday ||
+        !userEmail ||
+        !userId ||
+        !passWord
+      ) {
         setError("Please fill all fields.");
         setLoading(false);
         return;
@@ -23,6 +33,9 @@ const Register = ({}) => {
 
       const response = await axios.post("/auth/register", {
         userName,
+        userSurname,
+        userBirthday,
+        userEmail,
         userId,
         passWord,
       });
@@ -41,26 +54,47 @@ const Register = ({}) => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen text-white">
+    <div className="w-full h-screen flex flex-col justify-center items-center">
       <h1 className="text-4xl font-bold mb-8">Register</h1>
-      <div className="flex flex-col space-y-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-4">
         <input
           type="text"
-          className="px-4 py-2 bg-white rounded text-[#50d71e]"
-          placeholder="UserName"
+          className="px-4 py-2 rounded dark:text-white text-black"
+          placeholder="First Name"
           value={userName}
           onChange={(e) => setUserName(e.target.value)}
         />
         <input
           type="text"
-          className="px-4 py-2 bg-white rounded text-[#50d71e]"
+          className="px-4 py-2 rounded dark:text-white text-black"
+          placeholder="Last Name"
+          value={userSurname}
+          onChange={(e) => setUserSurname(e.target.value)}
+        />
+        <input
+          type="date"
+          className="px-4 py-2 rounded dark:text-white text-black"
+          placeholder="Birthday"
+          value={userBirthday}
+          onChange={(e) => setUserBirthday(e.target.value)}
+        />
+        <input
+          type="email"
+          className="px-4 py-2 rounded dark:text-white text-black"
+          placeholder="Email"
+          value={userEmail}
+          onChange={(e) => setUserEmail(e.target.value)}
+        />
+        <input
+          type="text"
+          className="px-4 py-2 rounded dark:text-white text-black"
           placeholder="UserID"
           value={userId}
           onChange={(e) => setUserId(e.target.value)}
         />
         <input
           type="password"
-          className="px-4 py-2 bg-white rounded text-[#000]"
+          className="px-4 py-2 rounded dark:text-white text-black"
           placeholder="Password"
           value={passWord}
           onChange={(e) => setPassWord(e.target.value)}
