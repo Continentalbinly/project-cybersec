@@ -117,7 +117,7 @@ function Navbar({ setIsSidebarOpen }) {
                   className="h-8 me-3"
                   alt="FlowBite Logo"
                 />
-                <span className="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white hidden sm:block">
+                <span className="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white text-black hidden sm:block">
                   Cyber
                 </span>
               </a>
@@ -145,17 +145,17 @@ function Navbar({ setIsSidebarOpen }) {
                     />
                   </button>
                   {isUserMenuOpen && (
-                    <div className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5">
-                      <a className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer">
+                    <div className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700 ring-1 ring-black ring-opacity-5">
+                      <a className="block px-4 py-2 text-sm text-gray-700 dark:text-white hover:bg-gray-900 cursor-pointer">
                         View Profile
                       </a>
-                      <a className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer">
+                      <a className="block px-4 py-2 text-sm text-gray-700 dark:text-white  hover:bg-gray-900 cursor-pointer">
                         Policy
                       </a>
                       <a
                         type="button"
                         onClick={handleLogout}
-                        className="block px-4 py-2 text-sm text-red-700 hover:bg-gray-100 cursor-pointer"
+                        className="block px-4 py-2 text-sm text-red-500 hover:bg-gray-900 cursor-pointer"
                       >
                         Logout
                       </a>
