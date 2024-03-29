@@ -59,18 +59,45 @@ function NewSidebar({ isOpen }) {
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="w-6 h-6"
+                data-name="Layer 1"
+                viewBox="0 0 29 29"
                 fill="none"
+                id="user"
                 stroke="currentColor"
-                viewBox="0 0 24 24"
-                strokeLinecap="round"
-                strokeLinejoin="round"
+                width="24"
+                height="24"
               >
-                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                <circle cx="12" cy="12" r="9" />
-                <polyline points="12 7 12 12 15 15" />
+                <path d="M14.5 2A12.514 12.514 0 0 0 2 14.5 12.521 12.521 0 0 0 14.5 27a12.5 12.5 0 0 0 0-25Zm7.603 19.713a8.48 8.48 0 0 0-15.199.008A10.367 10.367 0 0 1 4 14.5a10.5 10.5 0 0 1 21 0 10.368 10.368 0 0 1-2.897 7.213ZM14.5 7a4.5 4.5 0 1 0 4.5 4.5A4.5 4.5 0 0 0 14.5 7Z"></path>
               </svg>
               <span>ຂໍ້ມູນຂອງຂ້ອຍ</span>
+            </a>
+          </li>
+          <li>
+            <a
+              href="/redeemshop"
+              className={`flex items-center space-x-2 px-4 py-2 rounded-lg dark:text-white text-black cursor-pointer hover:bg-gray-900 ${
+                location.pathname === "/redeemshop"
+                  ? "bg-gray-100 dark:bg-gray-900 dark:border-gray-700"
+                  : ""
+              }`}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="feather feather-shopping-cart"
+                width="24"
+                height="24"
+              >
+                <circle cx="9" cy="21" r="1"></circle>
+                <circle cx="20" cy="21" r="1"></circle>
+                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61H17a2 2 0 0 0 2-1.61L23 6H6"></path>
+              </svg>
+              <span>ແລກຂອງລາງວັນ</span>
             </a>
           </li>
           <hr />
@@ -99,30 +126,7 @@ function NewSidebar({ isOpen }) {
               <span>ຕັ້ງຄ່າ</span>
             </a>
           </li>
-          <li>
-            <a
-              href="/profile"
-              className={`flex items-center space-x-2 px-4 py-2 rounded-lg dark:text-white text-black cursor-pointer hover:bg-gray-900 ${
-                location.pathname === "/profile"
-                  ? "bg-gray-100 dark:bg-gray-900 dark:border-gray-700"
-                  : ""
-              }`}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                data-name="Layer 1"
-                viewBox="0 0 29 29"
-                fill="none"
-                id="user"
-                stroke="currentColor"
-                width="24"
-                height="24"
-              >
-                <path d="M14.5 2A12.514 12.514 0 0 0 2 14.5 12.521 12.521 0 0 0 14.5 27a12.5 12.5 0 0 0 0-25Zm7.603 19.713a8.48 8.48 0 0 0-15.199.008A10.367 10.367 0 0 1 4 14.5a10.5 10.5 0 0 1 21 0 10.368 10.368 0 0 1-2.897 7.213ZM14.5 7a4.5 4.5 0 1 0 4.5 4.5A4.5 4.5 0 0 0 14.5 7Z"></path>
-              </svg>
-              <span>ໂປຣ໌ຟາຍ</span>
-            </a>
-          </li>
+
           {isAdmin && (
             <li className="mt-auto">
               <a
