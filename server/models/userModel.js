@@ -59,6 +59,10 @@ const userSchema = new mongoose.Schema(
       default:
         "https://w7.pngwing.com/pngs/174/296/png-transparent-anonymous-logo-hacktivism-anonymous-mask-white-people-monochrome.png",
     },
+    status: {
+      type: Number,
+      default: 0,
+    },
   },
   { timestamps: true }
 );

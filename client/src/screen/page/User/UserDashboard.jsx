@@ -1,7 +1,9 @@
 import React, { useEffect, useRef } from "react";
 import Chart from "chart.js/auto";
+import { useAuthContext } from "../../../hook/useAuth";
 
 function UserDashboard() {
+  const { userData } = useAuthContext();
   const chartRef = useRef(null);
 
   useEffect(() => {
@@ -49,13 +51,33 @@ function UserDashboard() {
   }, []);
 
   return (
-    <div className="w-full bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6">
-      <div className="flex justify-between mb-3">
-        <div className="flex items-center">
-          <h5 className="text-xl">ກະດານຂໍ້ມູນ</h5>
+    <div className="w-full ">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-4">
+        {userData && (
+          <div className="">
+            <img className="w-40 h-40 rounded-full" src={userData.userImg} />
+            <p>
+              {userData.userName} {userData.userSurname}
+            </p>
+            <p>ບົດບາດ: {userData.role}</p>
+            <p>ສະຖານະ: {userData.status}</p>
+            <p>ຄະແນນ: {userData.score}</p>
+            <p>ແຕ້ມ: {userData.point}</p>
+            <p>ພາລະກິດ: {userData.task}</p>
+            <p>ຜ່ານການຝຶກ: {userData.finishTask}</p>
+          </div>
+        )}
+        <div className=" bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6 col-span-2">
+          <div className=" justify-between mb-3">
+            <div className=" items-center">
+              <h5 className="text-xl">ກະດານຂໍ້ມູນ</h5>
+            </div>
+          </div>
+          <div>
+            <canvas ref={chartRef} height="150"></canvas>
+          </div>
         </div>
       </div>
-      <canvas ref={chartRef} width="400" height="200"></canvas>
     </div>
   );
 }

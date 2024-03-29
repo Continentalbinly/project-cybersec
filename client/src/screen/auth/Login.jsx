@@ -1,10 +1,11 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { AuthContext } from "../../context/authContext";
+import { useAuthContext } from "../../hook/useAuth"; // Import the hook directly
 
 const Login = () => {
-  const [, setState] = useContext(AuthContext); // Destructuring state not required
+  const { setAuthState } = useAuthContext(); // Use the hook directly
+
   const [userId, setUserId] = useState("");
   const [passWord, setPassWord] = useState("");
   const [loading, setLoading] = useState(false);
@@ -18,7 +19,7 @@ const Login = () => {
         return;
       }
       const { data } = await axios.post("/auth/login", { userId, passWord });
-      setState(data); // Update state with user data directly
+      setAuthState(data); // Update state with user data directly using setAuthState
       console.log("Login success:", data);
       localStorage.setItem("@auth", JSON.stringify(data)); // Update localStorage key
     } catch (error) {
