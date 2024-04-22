@@ -4,6 +4,8 @@ const {
   loginController,
   updateUserController,
   getUserController,
+  getAllUsersController,
+  updateUserStatusController,
 } = require("../controllers/userController");
 
 //router object
@@ -18,6 +20,10 @@ router.post("/login", loginController);
 router.put("/update-user", updateUserController);
 //FETCH
 router.get("/fetchuser", getUserController);
+//FETCH Alluser
+router.get("/fetchalluser", getAllUsersController);
+//Update user status by ID
+router.put("/update-user-status", updateUserStatusController);
 
 //export
 module.exports = router;
