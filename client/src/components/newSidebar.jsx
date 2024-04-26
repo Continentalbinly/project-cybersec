@@ -17,7 +17,7 @@ function NewSidebar({ isOpen }) {
 
   return (
     <aside
-      className={`flex-none h-full w-64 px-4 py-16 bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700 lg:block ${
+      className={`flex-none h-full w-64 px-4 py-16 bg-white border-b border-gray-200 dark:bg-gray-100 dark:border-gray-100 lg:block ${
         isOpen ? "" : "hidden"
       }`}
     >
@@ -27,7 +27,7 @@ function NewSidebar({ isOpen }) {
           <li>
             <a
               href="/"
-              className={`flex items-center space-x-2 px-4 py-2 rounded-lg dark:text-white text-black cursor-pointer hover:bg-gray-900 ${
+              className={`flex items-center space-x-2 px-4 py-2 rounded-lg dark:text-white text-black cursor-pointer hover:bg-gray-100 ${
                 location.pathname === "/"
                   ? "bg-gray-100 dark:bg-gray-900 dark:border-gray-700"
                   : ""
@@ -51,7 +51,7 @@ function NewSidebar({ isOpen }) {
           <li>
             <a
               href="/feuature"
-              className={`flex items-center space-x-2 px-4 py-2 rounded-lg dark:text-white text-black cursor-pointer hover:bg-gray-900 ${
+              className={`flex items-center space-x-2 px-4 py-2 rounded-lg dark:text-white text-black cursor-pointer hover:bg-gray-100 ${
                 location.pathname === "/feuature"
                   ? "bg-gray-100 dark:bg-gray-900 dark:border-gray-700"
                   : ""
@@ -75,9 +75,9 @@ function NewSidebar({ isOpen }) {
           <li>
             <a
               href="/redeemshop"
-              className={`flex items-center space-x-2 px-4 py-2 rounded-lg dark:text-white text-black cursor-pointer hover:bg-gray-900 ${
+              className={`flex items-center space-x-2 px-4 py-2 rounded-lg dark:text-white text-black cursor-pointer hover:bg-gray-100 ${
                 location.pathname === "/redeemshop"
-                  ? "bg-gray-100 dark:bg-gray-900 dark:border-gray-700"
+                  ? "bg-gray-100 dark:bg-gray-100 dark:border-gray-100"
                   : ""
               }`}
             >
@@ -105,9 +105,9 @@ function NewSidebar({ isOpen }) {
           <li>
             <a
               href="/setting"
-              className={`flex items-center space-x-2 px-4 py-2 rounded-lg dark:text-white text-black cursor-pointer hover:bg-gray-900 ${
+              className={`flex items-center space-x-2 px-4 py-2 rounded-lg dark:text-white text-black cursor-pointer hover:bg-gray-100 ${
                 location.pathname === "/setting"
-                  ? "bg-gray-100 dark:bg-gray-900 dark:border-gray-700"
+                  ? "bg-gray-100 dark:bg-gray-100 dark:border-gray-100"
                   : ""
               }`}
             >
@@ -131,9 +131,9 @@ function NewSidebar({ isOpen }) {
             <li className="mt-auto">
               <a
                 href="/admin"
-                className={`flex items-center space-x-2 px-4 py-2 rounded-lg dark:text-white text-black cursor-pointer hover:bg-gray-900 ${
+                className={`flex items-center space-x-2 px-4 py-2 rounded-lg dark:text-white text-black cursor-pointer hover:bg-gray-100 ${
                   location.pathname === "/admin"
-                    ? "bg-gray-100 dark:bg-gray-900 dark:border-gray-700"
+                    ? "bg-gray-100 dark:bg-gray-100 dark:border-gray-100"
                     : ""
                 }`}
               >
@@ -158,7 +158,7 @@ function NewSidebar({ isOpen }) {
           )}
           <li className="absolute bottom-2 ">
             <a
-              className={` w-[220px] flex items-center space-x-2 px-4 py-2 rounded-lg dark:text-red-500 text-black cursor-pointer hover:bg-gray-900`}
+              className={` w-[220px] flex items-center space-x-2 px-4 py-2 rounded-lg dark:text-red-500 text-black cursor-pointer hover:bg-gray-100`}
               onClick={handleLogout}
             >
               <svg

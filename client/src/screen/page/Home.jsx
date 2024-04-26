@@ -15,7 +15,7 @@ function Home() {
       <br />
       <div className="w-full flex justify-center">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-4">
-          <div className="rounded w-full h-auto p-2 bg-gray-800 cursor-pointer hover:bg-gray-700">
+          <div className="rounded w-full h-auto p-2 bg-gray-100 cursor-pointer hover:bg-gray-200">
             <img
               className="rounded"
               src="https://cxotoday.com/wp-content/uploads/2023/05/Cybersecurity.jpeg"
@@ -27,8 +27,8 @@ function Home() {
             <div className="pt-1 text-[12px]">Task:</div>
             <div className="pt-1 text-[12px]">Total Point:</div>
           </div>
-          <div className="rounded w-full h-auto p-2 bg-gray-800 cursor-pointer hover:bg-gray-700">
-            <div className="rounded w-full h-auto p-2 bg-gray-800 cursor-pointer hover:bg-gray-700">
+          <div className="rounded w-full h-auto p-2 bg-gray-100 cursor-pointer hover:bg-gray-200">
+            <div className="rounded w-full h-auto p-2 bg-gray-100 cursor-pointer hover:bg-gray-200">
               <img
                 className="rounded"
                 src="https://cxotoday.com/wp-content/uploads/2023/05/Cybersecurity.jpeg"
@@ -41,8 +41,8 @@ function Home() {
               <div className="pt-1 text-[12px]">Total Point:</div>
             </div>
           </div>
-          <div className="rounded w-full h-auto p-2 bg-gray-800 cursor-pointer hover:bg-gray-700">
-            <div className="rounded w-full h-auto p-2 bg-gray-800 cursor-pointer hover:bg-gray-700">
+          <div className="rounded w-full h-auto p-2 bg-gray-100 cursor-pointer hover:bg-gray-200">
+            <div className="rounded w-full h-auto p-2 bg-gray-100 cursor-pointer hover:bg-gray-200">
               <img
                 className="rounded"
                 src="https://cxotoday.com/wp-content/uploads/2023/05/Cybersecurity.jpeg"
@@ -55,8 +55,8 @@ function Home() {
               <div className="pt-1 text-[12px]">Total Point:</div>
             </div>
           </div>
-          <div className="rounded w-full h-auto p-2 bg-gray-800 cursor-pointer hover:bg-gray-700">
-            <div className="rounded w-full h-auto p-2 bg-gray-800 cursor-pointer hover:bg-gray-700">
+          <div className="rounded w-full h-auto p-2 bg-gray-100 cursor-pointer hover:bg-gray-200">
+            <div className="rounded w-full h-auto p-2 bg-gray-100 cursor-pointer hover:bg-gray-200">
               <img
                 className="rounded"
                 src="https://cxotoday.com/wp-content/uploads/2023/05/Cybersecurity.jpeg"
