@@ -40,6 +40,7 @@ function AddLessen() {
 
   return (
     <>
+
       <div className="text-xl font-semibold flex justify-between">
         <h5>ເພີ່ມຄອດສ໌ ແລະ ບົດຮຽນ</h5>
         <button
@@ -50,6 +51,7 @@ function AddLessen() {
             ເພີ່ມ
           </span>
         </button>
+
       </div>
       <br />
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -67,6 +69,7 @@ function AddLessen() {
               </th>
               <th scope="col" className="px-6 py-3">
                 ຄະແນນລວມ
+
               </th>
               <th scope="col" className="px-6 py-3 flex justify-center">
                 Action
@@ -106,6 +109,7 @@ function AddLessen() {
       </div>
     </>
   );
+
 }
 
 export default AddLessen;
