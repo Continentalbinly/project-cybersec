@@ -1,31 +1,31 @@
 const mongoose = require("mongoose");
 
-const taskSchema = new mongoose.Schema({
-  taskNumber: {
-    type: Number,
-    required: true,
-  },
-  question: {
-    type: String,
-    required: true,
-  },
-  point: {
-    type: Number,
-    required: true,
-  },
-});
+// const taskSchema = new mongoose.Schema({
+//   taskNumber: {
+//     type: Number,
+//     required: true,
+//   },
+//   question: {
+//     type: String,
+//     required: true,
+//   },
+//   point: {
+//     type: Number,
+//     required: true,
+//   },
+// });
 
-const lessonSchema = new mongoose.Schema({
-  title: {
-    type: String,
-    required: true,
-  },
-  description: {
-    type: String,
-    required: true,
-  },
-  tasks: [taskSchema],
-});
+// const lessonSchema = new mongoose.Schema({
+//   title: {
+//     type: String,
+//     required: true,
+//   },
+//   description: {
+//     type: String,
+//     required: true,
+//   },
+//   tasks: [taskSchema],
+// });
 
 const courseSchema = new mongoose.Schema(
   {
@@ -42,14 +42,8 @@ const courseSchema = new mongoose.Schema(
       required: true,
     },
     instructor: {
-      name: {
-        type: String,
-        required: true,
-      },
-      email: {
-        type: String,
-        required: true,
-      },
+      type: String,
+      required: true,
     },
     duration: {
       type: String,
@@ -59,22 +53,9 @@ const courseSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    lessons: [lessonSchema],
-    requirements: [
-      {
-        type: String,
-        required: true,
-      },
-    ],
-    certification: {
-      title: {
-        type: String,
-        required: true,
-      },
-      description: {
-        type: String,
-        required: true,
-      },
+    requirements: {
+      type: String,
+      required: true,
     },
   },
   { timestamps: true }

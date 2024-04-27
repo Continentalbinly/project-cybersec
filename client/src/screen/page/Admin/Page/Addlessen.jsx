@@ -1,10 +1,15 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function AddLessen() {
   axios.defaults.baseURL = "http://localhost:8080/api/v1";
   const [courses, setCourses] = useState([]);
+  const navigate = useNavigate();
 
+  const handleNavigate = () => {
+    navigate("/admin/create/course"); 
+  };
   useEffect(() => {
     // Fetch courses from API
     const fetchCourses = async () => {
@@ -22,7 +27,6 @@ function AddLessen() {
 
     fetchCourses();
   }, []);
-  
 
   const handleEditCourse = (courseId) => {
     // Handle edit operation
@@ -39,7 +43,7 @@ function AddLessen() {
       <div className="text-xl font-semibold flex justify-between">
         <h5>ເພີ່ມຄອດສ໌ ແລະ ບົດຮຽນ</h5>
         <button
-          onClick={() => handleAddCourse()}
+          onClick={handleNavigate}
           className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-green-400 to-blue-600 group-hover:from-green-400 group-hover:to-blue-600 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800"
         >
           <span className="relative px-3 py-2 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
@@ -75,7 +79,7 @@ function AddLessen() {
                 <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                   {course.courseTitle}
                 </td>
-                <td className="px-6 py-4">{course.lessons.length}</td>
+                {/* <td className="px-6 py-4">{course.lessons.length}</td> */}
                 <td className="px-6 py-4">{course.description}</td>
                 <td className="px-6 py-4">{course.students}</td>
                 <td className="px-6 py-4 flex justify-center">
