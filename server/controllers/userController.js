@@ -45,6 +45,32 @@ const getUserController = async (req, res) => {
   }
 };
 
+// Fetch all user data
+const getAllUsersController = async (req, res) => {
+  try {
+    const users = await userModel.find({}, { passWord: 0 }); // Exclude password field
+    if (!users || users.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "No users found",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "All users retrieved successfully",
+      users,
+    });
+  } catch (error) {
+    console.error("Error fetching all users:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Error fetching all users",
+      error: error.message,
+    });
+  }
+};
+
 //register
 const registerController = async (req, res) => {
   try {
@@ -195,6 +221,39 @@ const updateUserController = async (req, res) => {
     });
   }
 };
+// Update user status by ID
+const updateUserStatusController = async (req, res) => {
+  try {
+    const { userId, status } = req.body;
+    // Find user by userId
+    const user = await userModel.findOne({ userId });
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
+      });
+    }
+
+    // Update user status
+    user.status = status;
+    await user.save();
+
+    // Send response
+    res.status(200).json({
+      success: true,
+      message: `User status updated to ${status}`,
+      user: user,
+    });
+  } catch (error) {
+    console.error("Error updating user status:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Error updating user status",
+      error: error.message,
+    });
+  }
+};
+
 
 module.exports = {
   requireSignIn,
@@ -202,4 +261,6 @@ module.exports = {
   loginController,
   updateUserController,
   getUserController,
+  getAllUsersController,
+  updateUserStatusController
 };

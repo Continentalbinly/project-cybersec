@@ -10,6 +10,8 @@ import PageManager from "./screen/PageManager";
 import AdminDashboard from "./screen/page/Admin/AdminDashboard";
 import AdminRoutes from "./Routes/adminRotes";
 import RedeemShop from "./screen/page/RedeemShop";
+import Addcourse from "./screen/page/Admin/Page/components/Addcourse";
+
 
 function App() {
   return (
@@ -29,6 +31,7 @@ function App() {
             <Route path="*" element={<Error />} />
             <Route element={<AdminRoutes />}>
               <Route path="/admin" element={<AdminDashboard />} />
+              <Route path="/admin/create/course" element={<Addcourse />} />
             </Route>
           </Route>
           <Route element={<PublicRoutes />}>
