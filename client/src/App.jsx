@@ -11,6 +11,7 @@ import AdminDashboard from "./screen/page/Admin/AdminDashboard";
 import AdminRoutes from "./Routes/adminRotes";
 import RedeemShop from "./screen/page/RedeemShop";
 import Addcourse from "./screen/page/Admin/Page/components/Addcourse";
+import Exam from "./screen/page/Exam";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
           >
             <Route path="/" element={<Home />} />
             <Route path="/feuature" element={<Feuature />} />
+            <Route path="/exam" element={<Exam />} />
             <Route path="/redeemshop" element={<RedeemShop />} />
             <Route path="*" element={<Error />} />
             <Route element={<AdminRoutes />}>

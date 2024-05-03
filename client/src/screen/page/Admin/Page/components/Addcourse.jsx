@@ -9,8 +9,9 @@ function AddCourse() {
     description: "",
     instructor: "",
     duration: "",
-    previewImage: "",
+    previewImage: "https://cxotoday.com/wp-content/uploads/2023/05/Cybersecurity.jpeg",
     requirements: "",
+    permission: "",
   });
 
   const handleChange = (e) => {
@@ -33,8 +34,9 @@ function AddCourse() {
           description: "",
           instructor: "",
           duration: "",
-          previewImage: "",
+          previewImage: "https://cxotoday.com/wp-content/uploads/2023/05/Cybersecurity.jpeg",
           requirements: "",
+          permission: "",
         });
         // Show success message using alert
         alert("Course created successfully!");
@@ -102,6 +104,19 @@ function AddCourse() {
             id="duration"
             name="duration"
             value={newCourse.duration}
+            onChange={handleChange}
+            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500"
+          />
+        </div>
+        <div>
+          <label htmlFor="permission" className="block mb-2">
+            ສິດເຂົ້າເຖິງ:
+          </label>
+          <input
+            type="text"
+            id="permission"
+            name="permission"
+            value={newCourse.permission}
             onChange={handleChange}
             className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500"
           />

@@ -59,14 +59,14 @@ function AddLessen() {
               <th scope="col" className="px-6 py-3">
                 ຄອດສ໌ຮຽນ
               </th>
-              <th scope="col" className="px-6 py-3">
+              {/* <th scope="col" className="px-6 py-3">
                 ບົດຮຽນ
-              </th>
+              </th> */}
               <th scope="col" className="px-6 py-3">
                 ລາຍລະອຽດ
               </th>
               <th scope="col" className="px-6 py-3">
-                ຄະແນນລວມ
+                ສິດເຂົ້າເຖິງ
               </th>
               <th scope="col" className="px-6 py-3 flex justify-center">
                 Action
@@ -81,7 +81,7 @@ function AddLessen() {
                 </td>
                 {/* <td className="px-6 py-4">{course.lessons.length}</td> */}
                 <td className="px-6 py-4">{course.description}</td>
-                <td className="px-6 py-4">{course.students}</td>
+                <td className="px-6 py-4">{course.permission}</td>
                 <td className="px-6 py-4 flex justify-center">
                   <button
                     onClick={() => handleEditCourse(course._id)}

@@ -24,6 +24,10 @@ const mongoose = require("mongoose");
 //     type: String,
 //     required: true,
 //   },
+//   lab: {
+//     type: String,
+//     required: true,
+//   },
 //   tasks: [taskSchema],
 // });
 
@@ -51,11 +55,15 @@ const courseSchema = new mongoose.Schema(
     },
     previewImage: {
       type: String,
-      required: true,
+      default: "https://cxotoday.com/wp-content/uploads/2023/05/Cybersecurity.jpeg"
     },
     requirements: {
       type: String,
       required: true,
+    },
+    permission: {
+      type: String,
+      require: true,
     },
   },
   { timestamps: true }
