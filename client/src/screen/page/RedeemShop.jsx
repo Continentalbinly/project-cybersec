@@ -15,10 +15,10 @@ function RedeemShop() {
                 src="https://static.massimodutti.net/3/photos/2024/V/0/2/p/1410/760/800/1410760800_1_1_16.jpg?t=1705426141034&impolicy=massimodutti-itxmediumhigh&imwidth=500&imformat=chrome"
                 alt="cloth"
               />
-              <div className="bg-blue-950 w-[75px] p-1 flex justify-center absolute rounded-br-lg top-1 left-1">
+              <div className="bg-blue-400 w-[75px] p-1 flex justify-center absolute rounded-br-lg top-1 left-1">
                 <span>400</span>
               </div>
-              <div className="bg-blue-950 w-[75px] p-1 flex justify-center absolute rounded-none bottom-5 right-2">
+              <div className="bg-blue-400 w-[75px] p-1 flex justify-center absolute rounded-none bottom-5 right-2">
                 <span>ແລກ</span>
               </div>
             </div>
