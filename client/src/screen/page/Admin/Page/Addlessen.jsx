@@ -40,7 +40,6 @@ function AddLessen() {
 
   return (
     <>
-
       <div className="text-xl font-semibold flex justify-between">
         <h5>ເພີ່ມຄອດສ໌ ແລະ ບົດຮຽນ</h5>
         <button
@@ -51,7 +50,6 @@ function AddLessen() {
             ເພີ່ມ
           </span>
         </button>
-
       </div>
       <br />
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -61,15 +59,14 @@ function AddLessen() {
               <th scope="col" className="px-6 py-3">
                 ຄອດສ໌ຮຽນ
               </th>
-              <th scope="col" className="px-6 py-3">
+              {/* <th scope="col" className="px-6 py-3">
                 ບົດຮຽນ
-              </th>
+              </th> */}
               <th scope="col" className="px-6 py-3">
                 ລາຍລະອຽດ
               </th>
               <th scope="col" className="px-6 py-3">
-                ຄະແນນລວມ
-
+                ສິດເຂົ້າເຖິງ
               </th>
               <th scope="col" className="px-6 py-3 flex justify-center">
                 Action
@@ -84,7 +81,7 @@ function AddLessen() {
                 </td>
                 {/* <td className="px-6 py-4">{course.lessons.length}</td> */}
                 <td className="px-6 py-4">{course.description}</td>
-                <td className="px-6 py-4">{course.students}</td>
+                <td className="px-6 py-4">{course.permission}</td>
                 <td className="px-6 py-4 flex justify-center">
                   <button
                     onClick={() => handleEditCourse(course._id)}
@@ -109,7 +106,6 @@ function AddLessen() {
       </div>
     </>
   );
-
 }
 
 export default AddLessen;

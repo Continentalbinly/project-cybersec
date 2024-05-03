@@ -16,7 +16,7 @@ function AdminDataTable() {
       if (response.data.success) {
         const allUsers = response.data.users;
         const active = allUsers.filter((user) => user.status !== 0);
-        const inactive = allUsers.filter((user) => user.status === 0);
+        const inactive = allUsers.filter((user) => user.status === 0 && user.role === "user");
         setActiveUsers(active);
         setInactiveUsers(inactive);
       } else {

@@ -1,14 +1,73 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useAuthContext } from "../../hook/useAuth"; // Import the hook directly
 
 const Login = () => {
-  const { setAuthState } = useAuthContext(); // Use the hook directly
-
+  const { setAuthState } = useAuthContext();
+  const [userName, setUserName] = useState("");
+  const [userSurname, setUserSurname] = useState("");
+  const [userBirthday, setUserBirthday] = useState("");
+  const [userEmail, setUserEmail] = useState("");
   const [userId, setUserId] = useState("");
   const [passWord, setPassWord] = useState("");
   const [loading, setLoading] = useState(false);
+  const [isGuest, setIsGuest] = useState(false);
+
+  useEffect(() => {
+    if (userId && passWord && isGuest) {
+      handleGuestLogin();
+    }
+    return setIsGuest(false);
+  }, [userId, passWord, isGuest]); // Only trigger the effect when userId or passWord changes
+
+  const generateRandomCredentials = () => {
+    const randomUserId = `guest_${Math.floor(Math.random() * 100000)}`;
+    const randomPassWord = Math.random().toString(36).slice(-8);
+    const randomUserName = "Guest";
+    const randomUserSurname = "Guest";
+    const randomUserBirthday = new Date();
+    const randomUserEmail = `guest${Math.floor(
+      Math.random() * 100000
+    )}@example.com`;
+
+    setUserId(randomUserId);
+    setPassWord(randomPassWord);
+    setUserName(randomUserName);
+    setUserSurname(randomUserSurname);
+    setUserBirthday(randomUserBirthday);
+    setUserEmail(randomUserEmail);
+  };
+
+  const handleGuestLogin = async () => {
+    try {
+      setLoading(true);
+      generateRandomCredentials();
+      console.log(userId);
+      await axios.post("/auth/register", {
+        userName,
+        userSurname,
+        userBirthday,
+        userEmail,
+        userId,
+        passWord,
+        role: "guest",
+      });
+      const loginResponse = await axios.post("/auth/login", {
+        userId,
+        passWord,
+      });
+      setAuthState(loginResponse.data);
+      console.log("Guest Login success:", loginResponse.data);
+      localStorage.setItem("@auth", JSON.stringify(loginResponse.data));
+    } catch (error) {
+      console.error("Guest Login error:", error);
+      alert(error.message);
+    } finally {
+      setLoading(false);
+      window.location.reload();
+    }
+  };
 
   const handleSubmit = async () => {
     try {
@@ -19,15 +78,15 @@ const Login = () => {
         return;
       }
       const { data } = await axios.post("/auth/login", { userId, passWord });
-      setAuthState(data); // Update state with user data directly using setAuthState
+      setAuthState(data);
       console.log("Login success:", data);
-      localStorage.setItem("@auth", JSON.stringify(data)); // Update localStorage key
+      localStorage.setItem("@auth", JSON.stringify(data));
     } catch (error) {
       console.error("Login error:", error);
       alert(error.message);
     } finally {
       setLoading(false);
-      window.location.reload(); // Reload the page after loading is set to false
+      window.location.reload();
     }
   };
 
@@ -66,7 +125,10 @@ const Login = () => {
       <p>Or</p>
       <button
         className="w-56 py-2 bg-gray-500 rounded mt-4"
-        onClick={handleSubmit}
+        onClick={() => {
+          generateRandomCredentials();
+          setIsGuest(true);
+        }}
         disabled={loading}
       >
         {loading ? "Loading..." : "Guest"}

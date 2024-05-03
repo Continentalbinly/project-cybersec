@@ -81,6 +81,7 @@ const registerController = async (req, res) => {
       userEmail,
       userId,
       passWord,
+      role,
     } = req.body;
     // Validation
     if (
@@ -89,15 +90,14 @@ const registerController = async (req, res) => {
       !userBirthday ||
       !userEmail ||
       !userId ||
-      !passWord
+      !passWord ||
+      !role
     ) {
       return res.status(400).send({
         success: false,
         message: "All required fields are mandatory",
       });
     }
-
-    // Check if the user already exists
     const existingUser = await userModel.findOne({ userId });
     if (existingUser) {
       return res.status(400).send({
@@ -105,17 +105,15 @@ const registerController = async (req, res) => {
         message: "User with this userId already exists",
       });
     }
-
-    // Hash the password
     const hashedPassword = await hashPassword(passWord);
 
-    // Create new user
     const newUser = await userModel.create({
       userName,
       userSurname,
       userBirthday,
       userEmail,
       userId,
+      role,
       passWord: hashedPassword,
     });
 
@@ -254,7 +252,6 @@ const updateUserStatusController = async (req, res) => {
   }
 };
 
-
 module.exports = {
   requireSignIn,
   registerController,
@@ -262,5 +259,5 @@ module.exports = {
   updateUserController,
   getUserController,
   getAllUsersController,
-  updateUserStatusController
+  updateUserStatusController,
 };

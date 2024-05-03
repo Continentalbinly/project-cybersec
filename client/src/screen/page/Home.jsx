@@ -23,24 +23,6 @@ function Home() {
     fetchCourses();
   }, []);
 
-  // const getTotalTasks = (course) => {
-  //   let totalTasks = 0;
-  //   course.lessons.forEach((lesson) => {
-  //     totalTasks += lesson.tasks.length;
-  //   });
-  //   return totalTasks;
-  // };
-
-  // const getTotalPoints = (course) => {
-  //   let totalPoints = 0;
-  //   course.lessons.forEach((lesson) => {
-  //     lesson.tasks.forEach((task) => {
-  //       totalPoints += task.point || 0; 
-  //     });
-  //   });
-  //   return totalPoints;
-  // };
-
   return (
     <section>
       <div className="flex justify-center">
@@ -69,15 +51,6 @@ function Home() {
               <div className="pt-1 text-[12px]">
                 ລາຍລະອຽດ: {course.description}
               </div>
-              {/* <div className="pt-1 text-[12px]">
-                ບົດຮຽນ: {course.lessons.length}
-              </div> */}
-              {/* <div className="pt-1 text-[12px]">
-                ກິດຈະກຳ: {getTotalTasks(course)}
-              </div>
-              <div className="pt-1 text-[12px]">
-                ຄະແນນລວມ: {getTotalPoints(course)}
-              </div> */}
             </div>
           ))}
         </div>

@@ -38,6 +38,7 @@ const Register = () => {
         userEmail,
         userId,
         passWord,
+        role: "user",
       });
 
       if (response.data && response.data.message) {
