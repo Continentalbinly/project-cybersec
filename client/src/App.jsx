@@ -12,6 +12,7 @@ import AdminRoutes from "./Routes/adminRotes";
 import RedeemShop from "./screen/page/RedeemShop";
 import Addcourse from "./screen/page/Admin/Page/components/Addcourse";
 import Exam from "./screen/page/Exam";
+import Lesson from "./screen/page/Lesson";
 
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
               </PageManager>
             }
           >
+            <Route path="/lesson/" element={<Lesson/>}/>
             <Route path="/" element={<Home />} />
             <Route path="/feuature" element={<Feuature />} />
             <Route path="/exam" element={<Exam />} />

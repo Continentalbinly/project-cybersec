@@ -1,12 +1,14 @@
+// Home.js
+
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 function Home() {
   axios.defaults.baseURL = "http://localhost:8080/api/v1";
   const [courses, setCourses] = useState([]);
 
   useEffect(() => {
-    // Function to fetch courses from API
     const fetchCourses = async () => {
       try {
         const response = await axios.get("/course/getcourse");
@@ -37,20 +39,14 @@ function Home() {
       <br />
       <div className="w-full flex justify-center">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-4">
-          {courses.map((course) => (
-            <div
-              key={course._id}
-              className="rounded w-full h-auto p-2 bg-gray-800 cursor-pointer hover:bg-gray-700"
-            >
-              <img
-                className="rounded"
-                src={course.previewImage}
-                alt={course.courseTitle}
-              />
-              <div className="pt-3 text-[16px]">{course.courseTitle}</div>
-              <div className="pt-1 text-[12px]">
-                ລາຍລະອຽດ: {course.description}
-              </div>
+          {courses.map((course, index) => (
+            <div key={course._id} className="rounded w-full h-auto p-2 bg-gray-300 cursor-pointer hover:bg-gray-200">
+              <Link to="/lesson" className="block">
+
+                <img className="rounded" src={course.previewImage} alt={course.courseTitle} />
+                <div className="pt-3 text-[16px]">{course.courseTitle}</div>
+                <div className="pt-1 text-[12px]">ລາຍລະອຽດ: {course.description}</div>
+              </Link>
             </div>
           ))}
         </div>
