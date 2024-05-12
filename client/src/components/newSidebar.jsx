@@ -169,6 +169,7 @@ function NewSidebar({ isOpen }) {
               </li>
             </>
           )}
+>>>>>>>>> Temporary merge branch 2
           {isAdmin && (
             <li className="mt-auto">
               <a
