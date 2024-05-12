@@ -8,8 +8,9 @@ function AddLessen() {
   const navigate = useNavigate();
 
   const handleNavigate = () => {
-    navigate("/admin/create/course"); 
+    navigate("/admin/create/course");
   };
+  
   useEffect(() => {
     // Fetch courses from API
     const fetchCourses = async () => {
@@ -38,71 +39,67 @@ function AddLessen() {
     console.log("Delete course:", courseId);
   };
 
+  const handleAddLesson = (courseId) => {
+    // Navigate to the "Add Lesson" page for the selected course
+    navigate(`/admin/add/lesson/${courseId}`);
+  };
+
   return (
     <>
-      <div className="text-xl font-semibold flex justify-between">
-        <h5>ເພີ່ມຄອດສ໌ ແລະ ບົດຮຽນ</h5>
-        <button
-          onClick={handleNavigate}
-          className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-green-400 to-blue-600 group-hover:from-green-400 group-hover:to-blue-600 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800"
-        >
-          <span className="relative px-3 py-2 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
-            ເພີ່ມ
-          </span>
-        </button>
-      </div>
-      <br />
-      <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-        <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-          <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-            <tr>
-              <th scope="col" className="px-6 py-3">
-                ຄອດສ໌ຮຽນ
-              </th>
-              {/* <th scope="col" className="px-6 py-3">
-                ບົດຮຽນ
-              </th> */}
-              <th scope="col" className="px-6 py-3">
-                ລາຍລະອຽດ
-              </th>
-              <th scope="col" className="px-6 py-3">
-                ສິດເຂົ້າເຖິງ
-              </th>
-              <th scope="col" className="px-6 py-3 flex justify-center">
-                Action
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {courses.map((course) => (
-              <tr key={course._id}>
-                <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                  {course.courseTitle}
-                </td>
-                {/* <td className="px-6 py-4">{course.lessons.length}</td> */}
-                <td className="px-6 py-4">{course.description}</td>
-                <td className="px-6 py-4">{course.permission}</td>
-                <td className="px-6 py-4 flex justify-center">
-                  <button
-                    onClick={() => handleEditCourse(course._id)}
-                    className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-green-400 to-blue-600 group-hover:from-green-400 group-hover:to-blue-600 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800"
-                  >
-                    <span className="relative px-3 py-2 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
-                      ແກ້ໄຂ
-                    </span>
-                  </button>
-                  <button
-                    onClick={() => handleDeleteCourse(course._id)}
-                    type="button"
-                    className="px-3 py-2 text-xs font-medium text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 rounded-lg me-2 mb-2 dark:bg-gray-800 dark:text-red-600 dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
-                  >
-                    ລົບ
-                  </button>
-                </td>
+      <div className="max-w-4xl mx-auto p-6 bg-white rounded-md shadow-md">
+        <div className="flex justify-between items-center mb-6">
+          <h5 className="text-xl font-semibold">ເພີ່ມຄອດສ໌ ແລະ ບົດຮຽນ</h5>
+          <button
+            onClick={handleNavigate}
+            className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
+          >
+            ເພີ່ມຄອດສ໌
+          </button>
+        </div>
+        <div className="overflow-x-auto">
+          <table className="w-full border-collapse">
+            <thead>
+              <tr>
+                <th className="px-6 py-3 bg-gray-100 text-gray-600 uppercase border-b border-gray-200">ຄອດສ໌ຮຽນ</th>
+                <th className="px-6 py-3 bg-gray-100 text-gray-600 uppercase border-b border-gray-200">ລາຍລະອຽດ</th>
+                <th className="px-6 py-3 bg-gray-100 text-gray-600 uppercase border-b border-gray-200">ສິດເຂົ້າເຖິງ</th>
+                <th className="px-6 py-3 bg-gray-100 text-gray-600 uppercase border-b border-gray-200">Action</th>
+                <th className="px-6 py-3 bg-gray-100 text-gray-600 uppercase border-b border-gray-200">Add Lesson</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {courses.map((course) => (
+                <tr key={course._id} className="hover:bg-gray-100">
+                  <td className="px-6 py-4 whitespace-nowrap">{course.courseTitle}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">{course.description}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">{course.permission}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <button
+                      onClick={() => handleEditCourse(course._id)}
+                      className="px-4 py-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600 focus:outline-none focus:bg-yellow-600"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      onClick={() => handleDeleteCourse(course._id)}
+                      className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 focus:outline-none focus:bg-red-600 ml-2"
+                    >
+                      Delete
+                    </button>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <button
+                      onClick={() => handleAddLesson(course._id)}
+                      className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
+                    >
+                      Add Lesson
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </>
   );
