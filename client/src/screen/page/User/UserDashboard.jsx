@@ -1,10 +1,16 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Chart from "chart.js/auto";
 import { useAuthContext } from "../../../hook/useAuth";
+import MyCertificate from "./MyCertificate";
 
 function UserDashboard() {
   const { userData } = useAuthContext();
   const chartRef = useRef(null);
+  const [activeTab, setActiveTab] = useState("mycertificate");
+
+  const handleTabClick = (tab) => {
+    setActiveTab(tab);
+  };
 
   useEffect(() => {
     // Chart data
@@ -77,6 +83,29 @@ function UserDashboard() {
             <canvas ref={chartRef} height="150"></canvas>
           </div>
         </div>
+      </div>
+      <br />
+      <div>
+        <section>
+          <div className="text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
+            <ul className="flex flex-wrap -mb-px">
+              <li className="me-2">
+                <button
+                  onClick={() => handleTabClick("certificate")}
+                  className={`inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300 ${
+                    activeTab === "mycertificate"
+                      ? "text-gray-600 border-blue-600 dark:border-blue-500 dark:text-gray-300"
+                      : ""
+                  }`}
+                >
+                  ໃບຢັ້ງຢືນຂອງຂ້ອຍ
+                </button>
+              </li>
+            </ul>
+          </div>
+          <br />
+          <div>{activeTab === "mycertificate" && <MyCertificate />}</div>
+        </section>
       </div>
     </div>
   );

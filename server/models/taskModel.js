@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
-const lessonSchema = new mongoose.Schema({
-  course_id: {
+const taskSchema = new mongoose.Schema({
+  lesson_id: {
     type: String,
     required: true,
   },
@@ -13,21 +13,13 @@ const lessonSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  lab: {
+  answer: {
     type: String,
     required: true,
   },
-  question: {
-    type: String,
-    require: true,
-  },
-  answer: {
-    type: String,
-    require: true,
-  },
-  score: {
+  point: {
     type: Number,
   },
 });
 
-module.exports = mongoose.model("Lesson", lessonSchema);
+module.exports = mongoose.model("Task", taskSchema);

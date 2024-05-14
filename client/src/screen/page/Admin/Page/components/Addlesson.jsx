@@ -1,16 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import { useParams } from "react-router-dom";
 
 function Addlesson() {
-  const [lessonTitle, setLessonTitle] = useState('');
-  const [lessonContent, setLessonContent] = useState('');
+  const { id } = useParams();
+  const [lessonTitle, setLessonTitle] = useState("");
+  const [lessonContent, setLessonContent] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Logic to handle lesson submission, e.g., making an API request
-    console.log('Lesson submitted:', { lessonTitle, lessonContent });
-    // Clear form fields after submission
-    setLessonTitle('');
-    setLessonContent('');
+    console.log("Lesson submitted:", { lessonTitle, lessonContent });
+    setLessonTitle("");
+    setLessonContent("");
   };
 
   return (

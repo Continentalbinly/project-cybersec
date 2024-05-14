@@ -1,10 +1,14 @@
 import React, { useState } from "react";
 import AdminDataTable from "./Page/Arppovement";
-import Addlessen from "./Page/Addlessen";
+import CourseManager from "./Page/CourseManager";
 import Certificate from "./Page/Certificate";
 
 function AdminDashboard() {
-  const [activeTab, setActiveTab] = useState("request", "operation", "certificate");
+  const [activeTab, setActiveTab] = useState(
+    "request",
+    "operation",
+    "certificate"
+  );
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);
@@ -52,10 +56,10 @@ function AdminDashboard() {
           </li>
         </ul>
       </div>
-      <br/>
+      <br />
       <div>
         {activeTab === "request" && <AdminDataTable />}
-        {activeTab === "operation" && <Addlessen />}
+        {activeTab === "operation" && <CourseManager />}
         {activeTab === "certificate" && <Certificate />}
       </div>
     </section>

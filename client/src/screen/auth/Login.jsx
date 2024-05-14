@@ -78,15 +78,20 @@ const Login = () => {
         return;
       }
       const { data } = await axios.post("/auth/login", { userId, passWord });
-      setAuthState(data);
-      console.log("Login success:", data);
-      localStorage.setItem("@auth", JSON.stringify(data));
+      console.log("Login Response:", data);
+      if (data.user && data.user.status == 1) {
+        alert("ເຂົ້າສູ່ລະບົບສຳເລັດ");
+        setAuthState(data);
+        localStorage.setItem("@auth", JSON.stringify(data));
+        window.location.reload();
+      } else {
+        alert("ກະລຸນາລໍຖ້າແອັດມິນອະນຸມັດເຂົ້າໃຊ້ງານ");
+      }
     } catch (error) {
       console.error("Login error:", error);
       alert(error.message);
     } finally {
       setLoading(false);
-      window.location.reload();
     }
   };
 
