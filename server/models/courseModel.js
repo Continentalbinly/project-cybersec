@@ -1,36 +1,4 @@
 const mongoose = require("mongoose");
-
-// const taskSchema = new mongoose.Schema({
-//   taskNumber: {
-//     type: Number,
-//     required: true,
-//   },
-//   question: {
-//     type: String,
-//     required: true,
-//   },
-//   point: {
-//     type: Number,
-//     required: true,
-//   },
-// });
-
-// const lessonSchema = new mongoose.Schema({
-//   title: {
-//     type: String,
-//     required: true,
-//   },
-//   description: {
-//     type: String,
-//     required: true,
-//   },
-//   lab: {
-//     type: String,
-//     required: true,
-//   },
-//   tasks: [taskSchema],
-// });
-
 const courseSchema = new mongoose.Schema(
   {
     courseTitle: {
@@ -55,7 +23,8 @@ const courseSchema = new mongoose.Schema(
     },
     previewImage: {
       type: String,
-      default: "https://cxotoday.com/wp-content/uploads/2023/05/Cybersecurity.jpeg"
+      default:
+        "https://cxotoday.com/wp-content/uploads/2023/05/Cybersecurity.jpeg",
     },
     requirements: {
       type: String,

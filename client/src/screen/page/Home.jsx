@@ -40,12 +40,20 @@ function Home() {
       <div className="w-full flex justify-center">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-4">
           {courses.map((course, index) => (
-            <div key={course._id} className="rounded w-full h-auto p-2 bg-gray-300 cursor-pointer hover:bg-gray-200">
-              <Link to="/lesson" className="block">
-
-                <img className="rounded" src={course.previewImage} alt={course.courseTitle} />
+            <div
+              key={course._id}
+              className="rounded w-full h-auto p-2 bg-gray-300 cursor-pointer hover:bg-gray-200"
+            >
+              <Link to={`/lesson/${course._id}`} className="block">
+                <img
+                  className="rounded"
+                  src={course.previewImage}
+                  alt={course.courseTitle}
+                />
                 <div className="pt-3 text-[16px]">{course.courseTitle}</div>
-                <div className="pt-1 text-[12px]">ລາຍລະອຽດ: {course.description}</div>
+                <div className="pt-1 text-[12px]">
+                  ລາຍລະອຽດ: {course.description}
+                </div>
               </Link>
             </div>
           ))}

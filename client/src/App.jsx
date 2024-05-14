@@ -12,8 +12,10 @@ import AdminRoutes from "./Routes/adminRotes";
 import RedeemShop from "./screen/page/RedeemShop";
 import Addcourse from "./screen/page/Admin/Page/components/Addcourse";
 import Exam from "./screen/page/Exam";
-import Lesson from "./screen/page/Lesson";
-
+import Lesson from "./screen/page/Course/CourseDetail";
+import Addlesson from "./screen/page/Admin/Page/components/Addlesson";
+import Editcourse from "./screen/page/Admin/Page/components/Editcourse";
+import LoginResult from "./screen/LoginResult";
 
 function App() {
   return (
@@ -27,20 +29,23 @@ function App() {
               </PageManager>
             }
           >
-            <Route path="/lesson/" element={<Lesson/>}/>
             <Route path="/" element={<Home />} />
             <Route path="/feuature" element={<Feuature />} />
             <Route path="/exam" element={<Exam />} />
             <Route path="/redeemshop" element={<RedeemShop />} />
             <Route path="*" element={<Error />} />
+            <Route path="/lesson/:id" element={<Lesson />} />
             <Route element={<AdminRoutes />}>
               <Route path="/admin" element={<AdminDashboard />} />
               <Route path="/admin/create/course" element={<Addcourse />} />
+              <Route path="/admin/add/lesson/:id" element={<Addlesson />} />
+              <Route path="/admin/edit/course/:id" element={<Editcourse />} />
             </Route>
           </Route>
           <Route element={<PublicRoutes />}>
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/waitting" element={<LoginResult />} />
           </Route>
         </Routes>
       </BrowserRouter>

@@ -42,7 +42,7 @@ const Register = () => {
       });
 
       if (response.data && response.data.message) {
-        alert(response.data.message);
+        alert("ທ່ານໄດ້ລົງຖະບຽນສຳເລັດແລ້ວ ກະລຸນາລໍຖ້າການອະນຸມັດຈາກແອັດມິນ");
         navigate("/login");
       } else {
         setError("Registration failed. Please try again.");

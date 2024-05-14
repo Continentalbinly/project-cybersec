@@ -19,7 +19,7 @@ function NewSidebar({ isOpen }) {
 
   return (
     <aside
-      className={`flex-none h-full w-64 px-4 py-16 bg-white border-b border-gray-200 dark:bg-gray-100 dark:border-gray-100 lg:block ${
+      className={`flex-none h-full w-64 px-4 py-16 bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700 lg:block ${
         isOpen ? "" : "hidden"
       }`}
     >
@@ -30,7 +30,7 @@ function NewSidebar({ isOpen }) {
           <li>
             <a
               href="/"
-              className={`flex items-center space-x-2 px-4 py-2 rounded-lg dark:text-white text-black cursor-pointer hover:bg-gray-100 ${
+              className={`flex items-center space-x-2 px-4 py-2 rounded-lg dark:text-white text-black cursor-pointer hover:bg-gray-900 ${
                 location.pathname === "/"
                   ? "bg-gray-100 dark:bg-gray-900 dark:border-gray-700"
                   : ""
@@ -169,14 +169,13 @@ function NewSidebar({ isOpen }) {
               </li>
             </>
           )}
-
           {isAdmin && (
             <li className="mt-auto">
               <a
                 href="/admin"
-                className={`flex items-center space-x-2 px-4 py-2 rounded-lg dark:text-white text-black cursor-pointer hover:bg-gray-100 ${
+                className={`flex items-center space-x-2 px-4 py-2 rounded-lg dark:text-white text-black cursor-pointer hover:bg-gray-900 ${
                   location.pathname === "/admin"
-                    ? "bg-gray-100 dark:bg-gray-100 dark:border-gray-100"
+                    ? "bg-gray-100 dark:bg-gray-900 dark:border-gray-700"
                     : ""
                 }`}
               >
@@ -201,7 +200,7 @@ function NewSidebar({ isOpen }) {
           )}
           <li className="absolute bottom-2 ">
             <a
-              className={` w-[220px] flex items-center space-x-2 px-4 py-2 rounded-lg dark:text-red-500 text-black cursor-pointer hover:bg-gray-100`}
+              className={` w-[220px] flex items-center space-x-2 px-4 py-2 rounded-lg dark:text-red-500 text-black cursor-pointer hover:bg-gray-900`}
               onClick={handleLogout}
             >
               <svg
