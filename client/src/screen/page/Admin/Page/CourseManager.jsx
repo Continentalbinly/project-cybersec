@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import LessonForm from "./forms/LessonForm";
 
 function CourseManager() {
   axios.defaults.baseURL = "http://localhost:8080/api/v1";
   const [courses, setCourses] = useState([]);
   const [lessons, setLessons] = useState([]);
+  const [selectedLesson, setSelectedLesson] = useState(null);
+  const [isLessonFormVisible, setIsLessonFormVisible] = useState(false);
   const navigate = useNavigate();
 
   const handleNavigate = () => {
@@ -57,6 +60,25 @@ function CourseManager() {
   const handleAddLesson = (courseId) => {
     navigate(`/admin/add/lesson/${courseId}`);
   };
+
+  const handleEditLesson = (lessonId) => {
+    const lessonToEdit = lessons.find((lesson) => lesson._id === lessonId);
+    setSelectedLesson(lessonToEdit);
+    setIsLessonFormVisible(true);
+  };
+
+  const handleDeleteLesson = async (lessonId) => {
+    try {
+      await axios.delete(`/lesson/deletelesson/${lessonId}`);
+      const updatedLessons = lessons.filter(
+        (lesson) => lesson._id !== lessonId
+      );
+      setLessons(updatedLessons);
+    } catch (error) {
+      console.error("Error deleting lesson:", error);
+    }
+  };
+
 
   return (
     <>
@@ -191,6 +213,17 @@ function CourseManager() {
           </table>
         </div>
       </div>
+      {isLessonFormVisible && (
+        <LessonForm
+          lesson={selectedLesson}
+          onClose={() => setIsLessonFormVisible(false)}
+          onRefresh={() => {
+            setIsLessonFormVisible(false);
+            // Refresh lessons after form submission
+            fetchLessons();
+          }}
+        />
+      )}
     </>
   );
 }
