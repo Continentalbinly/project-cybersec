@@ -2,11 +2,15 @@ import React, { useState } from "react";
 import AdminDataTable from "./Page/Arppovement";
 import CourseManager from "./Page/CourseManager";
 import Certificate from "./Page/Certificate";
+import RedeemController from "./Page/RedeemController";
+import ExamController from "./Page/ExamController";
 
 function AdminDashboard() {
   const [activeTab, setActiveTab] = useState(
     "request",
     "operation",
+    "exam",
+    "redeem",
     "certificate"
   );
 
@@ -44,6 +48,30 @@ function AdminDashboard() {
           </li>
           <li className="me-2">
             <button
+              onClick={() => handleTabClick("exam")}
+              className={`inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300 ${
+                activeTab === "exam"
+                  ? "text-gray-600 border-blue-600 dark:border-blue-500 dark:text-gray-300"
+                  : ""
+              }`}
+            >
+              Exam Controller
+            </button>
+          </li>
+          <li className="me-2">
+            <button
+              onClick={() => handleTabClick("redeem")}
+              className={`inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300 ${
+                activeTab === "redeem"
+                  ? "text-gray-600 border-blue-600 dark:border-blue-500 dark:text-gray-300"
+                  : ""
+              }`}
+            >
+              Redeem Manager
+            </button>
+          </li>
+          <li className="me-2">
+            <button
               onClick={() => handleTabClick("certificate")}
               className={`inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300 ${
                 activeTab === "certificate"
@@ -60,6 +88,8 @@ function AdminDashboard() {
       <div>
         {activeTab === "request" && <AdminDataTable />}
         {activeTab === "operation" && <CourseManager />}
+        {activeTab === "exam" && <ExamController />}
+        {activeTab === "redeem" && <RedeemController />}
         {activeTab === "certificate" && <Certificate />}
       </div>
     </section>

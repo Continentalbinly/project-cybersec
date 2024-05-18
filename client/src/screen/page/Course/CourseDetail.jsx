@@ -6,25 +6,35 @@ function Lesson() {
   const { id } = useParams();
   axios.defaults.baseURL = "http://localhost:8080/api/v1";
   const [course, setCourse] = useState(null);
+  const [lessons, setLessons] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchCourseById = async () => {
+    const fetchData = async () => {
       try {
-        const response = await axios.get(`/course/${id}`);
-        if (response.data.success) {
-          setCourse(response.data.course);
+        // Fetch course by ID
+        const courseResponse = await axios.get(`/course/${id}`);
+        if (courseResponse.data.success) {
+          setCourse(courseResponse.data.course);
         } else {
-          setError("Error fetching course: " + response.data.message);
+          setError("Error fetching course: " + courseResponse.data.message);
+        }
+        // Fetch all lessons
+        const response = await axios.get("/lesson/getlessons");
+        if (response.data.success) {
+          setLessons(response.data.lessons);
+        } else {
+          console.error("Error fetching lessons:", response.data.message);
         }
       } catch (error) {
-        setError("Error fetching course: " + error.message);
+        setError("Error fetching data: " + error.message);
       } finally {
         setLoading(false);
       }
     };
-    fetchCourseById();
+
+    fetchData();
   }, [id]);
 
   if (loading) {
@@ -62,14 +72,38 @@ function Lesson() {
               <h2 className="text-xl font-semibold">ບົດຮຽນ</h2>
               <hr />
               <br />
-              {/* <ul className="list-disc pl-4">
-                {course.syllabus.map((item, index) => (
-                  <li key={index}>{item}</li>
-                ))}
-              </ul> */}
+              {lessons.map((lesson) => {
+                if (lesson.course_id === id) {
+                  return (
+                    <div
+                      key={lesson._id}
+                    >
+                      <div className="bg-white shadow-lg rounded-lg overflow-hidden my-4 flex">
+                        <div className="px-6 py-4 flex w-full flex-row justify-between items-center">
+                          <div className="flex w-full">
+                            <div>
+                              <h3 className="text-lg text-gray-800 font-semibold">
+                                {lesson.title}
+                              </h3>
+                            </div>
+                            <div>
+                              <p className="text-lg text-gray-600 pl-10">
+                                {lesson.description}
+                              </p>
+                            </div>
+                          </div>
+                          <button className="bg-green-500 text-white font-semibold py-2 px-4 rounded-lg transition duration-300 ease-in-out hover:bg-green-600">
+                            ຮຽນ
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                }
+                return null;
+              })}
             </div>
           </div>
-          {/* Add more sections as needed */}
         </div>
       ) : (
         <div>Course not found</div>

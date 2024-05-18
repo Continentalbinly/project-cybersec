@@ -38,27 +38,20 @@ const getLessonsController = async (req, res) => {
   }
 };
 
-// Get lesson by ID
 const getLessonByIdController = async (req, res) => {
-  const { lessonId } = req.params;
+  const { courseId } = req.params;
   try {
-    const lesson = await Lesson.findById(lessonId);
-    if (!lesson) {
-      return res.status(404).json({
-        success: false,
-        message: "Lesson not found",
-      });
-    }
+    const lessons = await Lesson.find({ course_id: courseId });
     res.status(200).json({
       success: true,
-      message: "Lesson retrieved successfully",
-      lesson,
+      message: "Lessons retrieved successfully",
+      lessons,
     });
   } catch (error) {
-    console.error("Error fetching lesson by ID:", error);
+    console.error("Error fetching lessons:", error);
     res.status(500).json({
       success: false,
-      message: "Error fetching lesson",
+      message: "Error fetching lessons",
       error: error.message,
     });
   }
