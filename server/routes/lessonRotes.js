@@ -15,8 +15,8 @@ router.post("/createlesson", createLessonController);
 // Get all lessons
 router.get("/getlessons", getLessonsController);
 
-// Get lesson by ID
-router.get("/:lessonId", getLessonByIdController);
+// Get lessons by course ID
+router.get("/:courseId", getLessonByIdController);
 
 // Update lesson by ID
 router.put("/:lessonId", updateLessonController);
