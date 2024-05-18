@@ -1,28 +1,55 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 
 function RedeemShop() {
+  const [redeems, setRedeems] = useState([]);
+
+  useEffect(() => {
+    const fetchRedeems = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:8080/api/v1/redeem/getredeems"
+        );
+        if (response.data.success) {
+          setRedeems(response.data.redeems);
+        }
+      } catch (error) {
+        console.error("Error fetching redeems:", error);
+      }
+    };
+
+    fetchRedeems();
+  }, []);
+
   return (
     <>
       <div className="bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6">
         <h5>ແລກຂອງລາງວັນ</h5>
       </div>
       <div className="bg-white mt-5 rounded-lg shadow p-4 md:p-6 h-screen dark:bg-gray-800">
-        <div className="w-full flex justify-center">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-4">
-            <div className="rounded w-full h-auto p-2 bg-gray-800 cursor-pointer hover:bg-gray-700 relative">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {redeems.map((redeem) => (
+            <div key={redeem._id} className="bg-white shadow-lg rounded-lg p-6">
+              <h3 className="text-gray-600 text-lg font-semibold">
+                {redeem.itemsName}
+              </h3>
+              <p className="text-gray-600">Quantity: {redeem.qty}</p>
               <img
-                className="rounded"
-                src="https://static.massimodutti.net/3/photos/2024/V/0/2/p/1410/760/800/1410760800_1_1_16.jpg?t=1705426141034&impolicy=massimodutti-itxmediumhigh&imwidth=500&imformat=chrome"
-                alt="cloth"
+                src={redeem.imageUrl}
+                alt={redeem.itemsName}
+                className="w-full h-40 object-cover mt-2"
               />
-              <div className="bg-blue-400 w-[75px] p-1 flex justify-center absolute rounded-br-lg top-1 left-1">
-                <span>400</span>
-              </div>
-              <div className="bg-blue-400 w-[75px] p-1 flex justify-center absolute rounded-none bottom-5 right-2">
-                <span>ແລກ</span>
+              <p className="text-gray-600">Points: {redeem.points}</p>
+              <div className="flex justify-end mt-4">
+                <button
+                  // onClick={() => handleRedeemRequest(redeem._id)}
+                  className="bg-green-500 text-white font-semibold py-2 px-4 rounded-lg transition duration-300 ease-in-out hover:bg-green-600"
+                >
+                  ແລກ
+                </button>
               </div>
             </div>
-          </div>
+          ))}
         </div>
       </div>
     </>

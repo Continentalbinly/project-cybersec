@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 
-function Addlesson() {
+function AddLesson() {
+  const { id } = useParams(); // Retrieve the `id` parameter from the URL
   const navigate = useNavigate();
   axios.defaults.baseURL = "http://localhost:8080/api/v1";
+
   const [lessonTitle, setLessonTitle] = useState("");
   const [lessonContent, setLessonContent] = useState("");
   const [lab, setLab] = useState("");
@@ -16,7 +17,7 @@ function Addlesson() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const lessonData = {
-      course_id: id,
+      course_id: id, // Use the `id` parameter from the URL
       title: lessonTitle,
       description: lessonContent,
       lab: lab,
@@ -36,7 +37,7 @@ function Addlesson() {
         setAnswer("");
         setScore("");
         alert("Lesson created successfully!");
-        navigate(-1);
+        navigate(-1); // Navigate back to the previous page
       } else {
         console.error("Error creating lesson:", response.data.message);
         alert("Error creating lesson: " + response.data.message);
@@ -49,7 +50,6 @@ function Addlesson() {
   return (
     <div className="container mx-auto mt-8">
       <h2 className="text-3xl font-semibold mb-4">Add Lesson</h2>
-      <h2 className="text-xl mb-2">Course ID: {id}</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="flex flex-col">
           <label htmlFor="lessonTitle" className="text-lg font-medium">
@@ -133,4 +133,4 @@ function Addlesson() {
   );
 }
 
-export default Addlesson;
+export default AddLesson;
