@@ -64,7 +64,7 @@ function Home() {
               className={`rounded w-full h-auto p-2 cursor-pointer ${
                 (!isUser && !isAdmin && course.permission !== "guest")
                   ? "bg-gray-300"
-                  : "bg-gray-200 hover:bg-gray-300"
+                  : "bg-gray-600 hover:bg-gray-500"
               }`}
               onClick={() => handleCourseClick(course.permission)}
             >

@@ -57,6 +57,32 @@ const getLessonByIdController = async (req, res) => {
   }
 };
 
+// Get lesson by ID
+const getLessonDetailByIdController = async (req, res) => {
+  const { lessonId } = req.params;
+  try {
+    const lesson = await Lesson.findById(lessonId);
+    if (!lesson) {
+      return res.status(404).json({
+        success: false,
+        message: "Lesson not found",
+      });
+    }
+    res.status(200).json({
+      success: true,
+      message: "Lesson retrieved successfully",
+      lesson,
+    });
+  } catch (error) {
+    console.error("Error fetching lesson details:", error);
+    res.status(500).json({
+      success: false,
+      message: "Error fetching lesson details",
+      error: error.message,
+    });
+  }
+};
+
 // Update lesson by ID
 const updateLessonController = async (req, res) => {
   const { lessonId } = req.params;
@@ -115,6 +141,7 @@ module.exports = {
   createLessonController,
   getLessonsController,
   getLessonByIdController,
+  getLessonDetailByIdController,
   updateLessonController,
   deleteLessonController,
 };

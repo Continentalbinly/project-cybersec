@@ -65,6 +65,9 @@ function UserDashboard() {
             <p>
               {userData.userName} {userData.userSurname}
             </p>
+            <p>
+              {userData.userEmail}
+            </p>
             <p>ບົດບາດ: {userData.role}</p>
             <p>ສະຖານະ: {userData.status}</p>
             <p>ຄະແນນ: {userData.score}</p>

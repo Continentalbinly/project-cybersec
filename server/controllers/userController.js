@@ -181,6 +181,48 @@ const loginController = async (req, res) => {
   }
 };
 
+// Update user points after successful redemption
+const updateUserPointsController = async (req, res) => {
+  try {
+    const { userId, pointsToDeduct } = req.body;
+
+    // Find user by userId
+    const user = await userModel.findById(userId);
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
+      });
+    }
+
+    // Validate if user has enough points
+    if (user.point < pointsToDeduct) {
+      return res.status(400).json({
+        success: false,
+        message: "Insufficient points",
+      });
+    }
+
+    // Deduct points from user's balance
+    user.point -= pointsToDeduct;
+    await user.save();
+
+    // Send response
+    res.status(200).json({
+      success: true,
+      message: `User points updated successfully. Remaining points: ${user.point}`,
+      user: user,
+    });
+  } catch (error) {
+    console.error("Error updating user points:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Error updating user points",
+      error: error.message,
+    });
+  }
+};
+
 //register user
 const updateUserController = async (req, res) => {
   try {
@@ -260,4 +302,5 @@ module.exports = {
   getUserController,
   getAllUsersController,
   updateUserStatusController,
+  updateUserPointsController,
 };

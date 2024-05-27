@@ -1,8 +1,13 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import RedeemRequestForm from "../page/Admin/Page/forms/RedeemRequestForm";
 
 function RedeemShop() {
   const [redeems, setRedeems] = useState([]);
+  const [showRequestForm, setShowRequestForm] = useState(false);
+  const [selectedRedeemId, setSelectedRedeemId] = useState(null);
+  const [selectedRedeemName, setSelectedRedeemName] = useState(null);
+  const [selectedRedeemRqPoint, setSelectedRedeemRqPoint] = useState(null);
 
   useEffect(() => {
     const fetchRedeems = async () => {
@@ -20,6 +25,13 @@ function RedeemShop() {
 
     fetchRedeems();
   }, []);
+
+  const handleOpenRequestForm = (redeemId, redeemName, redeemPoint) => {
+    setSelectedRedeemId(redeemId);
+    setSelectedRedeemName(redeemName);
+    setSelectedRedeemRqPoint(redeemPoint);
+    setShowRequestForm(true);
+  };
 
   return (
     <>
@@ -42,7 +54,13 @@ function RedeemShop() {
               <p className="text-gray-600">Points: {redeem.points}</p>
               <div className="flex justify-end mt-4">
                 <button
-                  // onClick={() => handleRedeemRequest(redeem._id)}
+                  onClick={() =>
+                    handleOpenRequestForm(
+                      redeem._id,
+                      redeem.itemsName,
+                      redeem.points
+                    )
+                  }
                   className="bg-green-500 text-white font-semibold py-2 px-4 rounded-lg transition duration-300 ease-in-out hover:bg-green-600"
                 >
                   ແລກ
@@ -52,6 +70,18 @@ function RedeemShop() {
           ))}
         </div>
       </div>
+      {showRequestForm && (
+        <RedeemRequestForm
+          redeemId={selectedRedeemId}
+          redeemName={selectedRedeemName}
+          redeemPoint={selectedRedeemRqPoint}
+          onClose={() => setShowRequestForm(false)}
+          onRefresh={() => {
+            setShowRequestForm(false);
+            fetchRedeems();
+          }}
+        />
+      )}
     </>
   );
 }

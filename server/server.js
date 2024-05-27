@@ -27,6 +27,7 @@ app.use("/api/v1/task", require("./routes/taskRoutes"));
 app.use("/api/v1/redeem", require("./routes/redeemRoutes"));
 app.use("/api/v1/exam", require("./routes/examRoutes"));
 app.use("/api/v1/certificate", require("./routes/certificateRoutes"));
+app.use("/api/v1/redeemrequest", require("./routes/redeemRequestRoutes"));
 
 //PORT
 const PORT = process.env.PORT || 8080;
