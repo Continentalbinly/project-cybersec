@@ -9,20 +9,20 @@ function RedeemShop() {
   const [selectedRedeemName, setSelectedRedeemName] = useState(null);
   const [selectedRedeemRqPoint, setSelectedRedeemRqPoint] = useState(null);
 
-  useEffect(() => {
-    const fetchRedeems = async () => {
-      try {
-        const response = await axios.get(
-          "http://localhost:8080/api/v1/redeem/getredeems"
-        );
-        if (response.data.success) {
-          setRedeems(response.data.redeems);
-        }
-      } catch (error) {
-        console.error("Error fetching redeems:", error);
+  const fetchRedeems = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:8080/api/v1/redeem/getredeems"
+      );
+      if (response.data.success) {
+        setRedeems(response.data.redeems);
       }
-    };
+    } catch (error) {
+      console.error("Error fetching redeems:", error);
+    }
+  };
 
+  useEffect(() => {
     fetchRedeems();
   }, []);
 
@@ -76,10 +76,7 @@ function RedeemShop() {
           redeemName={selectedRedeemName}
           redeemPoint={selectedRedeemRqPoint}
           onClose={() => setShowRequestForm(false)}
-          onRefresh={() => {
-            setShowRequestForm(false);
-            fetchRedeems();
-          }}
+          onRefresh={fetchRedeems} // Pass fetchRedeems as a prop
         />
       )}
     </>
