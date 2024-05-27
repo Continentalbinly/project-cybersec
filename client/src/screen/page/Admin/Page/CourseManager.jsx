@@ -69,7 +69,7 @@ function CourseManager() {
 
   const handleDeleteLesson = async (lessonId) => {
     try {
-      await axios.delete(`/lesson/deletelesson/${lessonId}`);
+      await axios.delete(`/lesson/${lessonId}`);
       const updatedLessons = lessons.filter(
         (lesson) => lesson._id !== lessonId
       );
@@ -78,7 +78,6 @@ function CourseManager() {
       console.error("Error deleting lesson:", error);
     }
   };
-
 
   return (
     <>
@@ -185,11 +184,14 @@ function CourseManager() {
               {lessons.map((lesson) => (
                 <tr key={lesson._id} className="hover:bg-gray-100">
                   <td className="px-6 py-4 whitespace-nowrap">
-                    {lesson.title}
+                    {lesson.header}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    {lesson.description}
+                    {lesson.title.length > 30
+                      ? `${lesson.title.substring(0, 30)}...`
+                      : lesson.title}
                   </td>
+
                   <td className="px-6 py-4 whitespace-nowrap">{lesson.lab}</td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <button
@@ -219,7 +221,6 @@ function CourseManager() {
           onClose={() => setIsLessonFormVisible(false)}
           onRefresh={() => {
             setIsLessonFormVisible(false);
-            // Refresh lessons after form submission
             fetchLessons();
           }}
         />

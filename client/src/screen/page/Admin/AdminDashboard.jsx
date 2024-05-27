@@ -31,7 +31,7 @@ function AdminDashboard() {
                   : ""
               }`}
             >
-              Request
+              User Manager
             </button>
           </li>
           <li className="me-2">
@@ -43,7 +43,7 @@ function AdminDashboard() {
                   : ""
               }`}
             >
-              Operation
+              Course Manager
             </button>
           </li>
           <li className="me-2">
@@ -55,7 +55,7 @@ function AdminDashboard() {
                   : ""
               }`}
             >
-              Exam Controller
+              Exam Manager
             </button>
           </li>
           <li className="me-2">
@@ -79,7 +79,7 @@ function AdminDashboard() {
                   : ""
               }`}
             >
-              Certificate
+              Certificate Manager
             </button>
           </li>
         </ul>

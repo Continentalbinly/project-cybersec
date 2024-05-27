@@ -5,10 +5,57 @@ const lessonSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  header: {
+    type: String,
+    required: true,
+  },
   title: {
     type: String,
     required: true,
   },
+  examples: [
+    {
+      example: [
+        {
+          title: {
+            type: String,
+          },
+          explanations: [
+            {
+              explanation: {
+                type: String,
+              },
+            },
+          ],
+        },
+      ],
+    },
+  ],
+  codes: [
+    {
+      code: [
+        {
+          title: {
+            type: String,
+          },
+          explanations: [
+            {
+              explanation: {
+                type: String,
+              },
+            },
+          ],
+        },
+      ],
+    },
+  ],
+  detailcode: [
+    {
+      tittle: {
+        type: String,
+      },
+    },
+  ],
   description: {
     type: String,
     required: true,
@@ -19,13 +66,13 @@ const lessonSchema = new mongoose.Schema({
   },
   question: {
     type: String,
-    require: true,
+    required: true,
   },
   answer: {
     type: String,
-    require: true,
+    required: true,
   },
-  score: {
+  point: {
     type: Number,
   },
 });

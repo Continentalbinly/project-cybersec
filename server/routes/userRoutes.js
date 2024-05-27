@@ -6,6 +6,7 @@ const {
   getUserController,
   getAllUsersController,
   updateUserStatusController,
+  updateUserPointsController 
 } = require("../controllers/userController");
 
 //router object
@@ -24,6 +25,8 @@ router.get("/fetchuser", getUserController);
 router.get("/fetchalluser", getAllUsersController);
 //Update user status by ID
 router.put("/update-user-status", updateUserStatusController);
+
+router.post("/update-user-points", updateUserPointsController);
 
 //export
 module.exports = router;
