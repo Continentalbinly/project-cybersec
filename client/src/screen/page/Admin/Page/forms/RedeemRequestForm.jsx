@@ -49,26 +49,17 @@ const RedeemRequestForm = ({
             }
           );
           if (response.data.success) {
-            const updatePointsResponse = await axios.post(
+            await axios.post(
               "http://localhost:8080/api/v1/auth/update-user-points",
               {
                 userId: userData._id,
                 pointsToDeduct: redeemPoint,
               }
             );
-            if (updatePointsResponse.data.success) {
-              setUserData((prevUserData) => ({
-                ...prevUserData,
-                points: prevUserData.points - redeemPoint,
-              }));
-              onRefresh();
-              onClose();
-            } else {
-              console.error(
-                "Error updating user points:",
-                updatePointsResponse.data.message
-              );
-            }
+            alert(
+              "Successfully redeemed! Admin will approve soon. Please wait for the Admin to send the receipt to your Email."
+            );
+            window.location.reload();
           }
         }
       } catch (error) {

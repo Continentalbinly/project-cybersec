@@ -126,8 +126,7 @@ const RedeemController = () => {
           </button>
         </div>
       </div>
-
-      {activeTab === "view" ? (
+      {activeTab === "view" && (
         <div>
           <h2 className="text-xl font-bold mb-4">ຄຳຂໍ</h2>
           <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -144,7 +143,13 @@ const RedeemController = () => {
                     Email
                   </th>
                   <th scope="col" className="px-6 py-3">
+                    Express
+                  </th>
+                  <th scope="col" className="px-6 py-3">
                     Location
+                  </th>
+                  <th scope="col" className="px-6 py-3">
+                    Phone
                   </th>
                   <th scope="col" className="px-6 py-3">
                     Action
@@ -160,7 +165,9 @@ const RedeemController = () => {
                         <td className="px-6 py-4">{request.redeemName}</td>
                         <td className="px-6 py-4">{request.userName}</td>
                         <td className="px-6 py-4">{request.email}</td>
+                        <td className="px-6 py-4">{request.express}</td>
                         <td className="px-6 py-4">{request.location}</td>
+                        <td className="px-6 py-4">{request.phone}</td>
                         <td className="px-6 py-4">
                           <button
                             onClick={() => handleApprove(request._id)}
@@ -227,7 +234,13 @@ const RedeemController = () => {
                     Email
                   </th>
                   <th scope="col" className="px-6 py-3">
+                    Express
+                  </th>
+                  <th scope="col" className="px-6 py-3">
                     Location
+                  </th>
+                  <th scope="col" className="px-6 py-3">
+                    Phone
                   </th>
                   <th scope="col" className="px-6 py-3">
                     Status
@@ -241,28 +254,40 @@ const RedeemController = () => {
                       <td className="px-6 py-4">{request.redeemName}</td>
                       <td className="px-6 py-4">{request.userName}</td>
                       <td className="px-6 py-4">{request.email}</td>
+                      <td className="px-6 py-4">{request.express}</td>
                       <td className="px-6 py-4">{request.location}</td>
-                      <td className="px-6 py-4">{request.status}</td>
+                      <td className="px-6 py-4">{request.phone}</td>
+                      <td
+                        className={`px-6 py-4 ${
+                          request.status === "rejected"
+                            ? "text-red-500"
+                            : request.status === "approved"
+                            ? "text-green-500"
+                            : ""
+                        }`}
+                      >
+                        {request.status}
+                      </td>
                     </tr>
                   ))}
               </tbody>
             </table>
           </div>
         </div>
-      ) : (
-        activeTab ===
-        "manage"(
-          <div>
-            <div className="flex justify-start mb-4">
-              <button
-                onClick={handleCreate}
-                className="bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg transition duration-300 ease-in-out hover:bg-blue-600"
-              >
-                ເພີ່ມຂອງລາງວັນ
-              </button>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {redeems.map((redeem) => (
+      )}
+      {activeTab === "manage" && (
+        <div>
+          <div className="flex justify-start mb-4">
+            <button
+              onClick={handleCreate}
+              className="bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg transition duration-300 ease-in-out hover:bg-blue-600"
+            >
+              ເພີ່ມຂອງລາງວັນ
+            </button>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {redeems &&
+              redeems.map((redeem) => (
                 <div
                   key={redeem._id}
                   className="bg-white shadow-lg rounded-lg p-6"
@@ -293,16 +318,15 @@ const RedeemController = () => {
                   </div>
                 </div>
               ))}
-            </div>
-            {isFormVisible && (
-              <RedeemForm
-                redeem={selectedRedeem}
-                onClose={() => setIsFormVisible(false)}
-                onRefresh={fetchRedeems}
-              />
-            )}
           </div>
-        )
+          {isFormVisible && (
+            <RedeemForm
+              redeem={selectedRedeem}
+              onClose={() => setIsFormVisible(false)}
+              onRefresh={fetchRedeems}
+            />
+          )}
+        </div>
       )}
     </div>
   );
