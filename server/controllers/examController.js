@@ -1,4 +1,6 @@
 const Exam = require("../models/examModel");
+const Task = require("../models/taskModel");
+const User = require("../models/userModel"); // Import the User model
 
 // Create an exam
 const createExamController = async (req, res) => {
@@ -22,7 +24,7 @@ const createExamController = async (req, res) => {
 // Get all exams
 const getExamsController = async (req, res) => {
   try {
-    const exams = await Exam.find({});
+    const exams = await Exam.find({}).populate("tasks");
     res.status(200).json({
       success: true,
       message: "Exams retrieved successfully",
@@ -42,7 +44,7 @@ const getExamsController = async (req, res) => {
 const getExamByIdController = async (req, res) => {
   const { examId } = req.params;
   try {
-    const exam = await Exam.findById(examId);
+    const exam = await Exam.findById(examId).populate("tasks");
     if (!exam) {
       return res.status(404).json({
         success: false,
@@ -118,10 +120,235 @@ const deleteExamController = async (req, res) => {
   }
 };
 
+// Add a task to an exam
+const createTaskController = async (req, res) => {
+  try {
+    const { examId } = req.params;
+    const { question, answers, score } = req.body;
+
+    const task = new Task({
+      examId,
+      question,
+      answers,
+      score,
+    });
+
+    await task.save();
+
+    // Find the exam and add the task
+    const exam = await Exam.findById(examId);
+    if (!exam) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Exam not found" });
+    }
+
+    exam.tasks.push(task._id);
+    await exam.save();
+
+    res.status(201).json(task);
+  } catch (error) {
+    console.error("Error creating task:", error);
+    res.status(500).json({ error: "Failed to create task" });
+  }
+};
+
+// Update a task in an exam
+const updateTaskController = async (req, res) => {
+  const { taskId } = req.params;
+  const { question, answer, score } = req.body;
+
+  try {
+    const updatedTask = await Task.findByIdAndUpdate(
+      taskId,
+      { question, answer, score },
+      { new: true }
+    );
+    if (!updatedTask) {
+      return res.status(404).json({
+        success: false,
+        message: "Task not found",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Task updated successfully",
+      task: updatedTask,
+    });
+  } catch (error) {
+    console.error("Error updating task:", error);
+    res.status(500).json({
+      success: false,
+      message: "Error updating task",
+      error: error.message,
+    });
+  }
+};
+
+// Delete a task from an exam
+const deleteTaskController = async (req, res) => {
+  const { taskId } = req.params;
+
+  try {
+    const deletedTask = await Task.findByIdAndDelete(taskId);
+    if (!deletedTask) {
+      return res.status(404).json({
+        success: false,
+        message: "Task not found",
+      });
+    }
+
+    const exam = await Exam.findById(deletedTask.examId);
+    exam.tasks.pull(taskId);
+    await exam.save();
+
+    res.status(200).json({
+      success: true,
+      message: "Task deleted successfully",
+      task: deletedTask,
+    });
+  } catch (error) {
+    console.error("Error deleting task:", error);
+    res.status(500).json({
+      success: false,
+      message: "Error deleting task",
+      error: error.message,
+    });
+  }
+};
+
+const submitAnswerController = async (req, res) => {
+  const { examId } = req.params;
+  const { userId, answers } = req.body; // Expect userId and answers in the request body
+
+  try {
+    const exam = await Exam.findById(examId).populate("tasks");
+    if (!exam) {
+      return res.status(404).json({
+        success: false,
+        message: "Exam not found",
+      });
+    }
+
+    let totalScore = 0;
+    let correctAnswersCount = 0;
+
+    for (const { taskId, userAnswer } of answers) {
+      const task = exam.tasks.find((t) => t._id.toString() === taskId);
+      if (!task) {
+        return res.status(404).json({
+          success: false,
+          message: "Task not found",
+        });
+      }
+      const correctAnswerObj = task.answers.find((a) => a.correct === true);
+      const correctAnswer = correctAnswerObj.answer;
+
+      console.log(
+        `Task ID: ${taskId}, User Answer: ${userAnswer}, Correct Answer: ${correctAnswer}`
+      );
+
+      if (correctAnswer === userAnswer) {
+        totalScore += task.score;
+        correctAnswersCount++;
+      }
+    }
+
+    // Update user score
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
+      });
+    }
+    user.score += totalScore; // Add the score to user's points
+    await user.save();
+
+    res.status(200).json({
+      success: true,
+      message: "Answers submitted successfully",
+      score: totalScore,
+      correctAnswersCount,
+    });
+  } catch (error) {
+    console.error("Error submitting answers:", error);
+    res.status(500).json({
+      success: false,
+      message: "Error submitting answers",
+      error: error.message,
+    });
+  }
+};
+
+// Take an exam
+const takeExamController = async (req, res) => {
+  const { examId } = req.params;
+
+  try {
+    // Fetch the exam by ID
+    const exam = await Exam.findById(examId);
+
+    // Check if the exam exists
+    if (!exam) {
+      return res.status(404).json({
+        success: false,
+        message: "Exam not found",
+      });
+    }
+
+    // Extract userId and pointsToDeduct from the request body
+    const { userId, pointsToDeduct } = req.body;
+
+    // Fetch the user by userId
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
+      });
+    }
+
+    // Validate if user has enough points
+    if (user.point < pointsToDeduct) {
+      return res.status(400).json({
+        success: false,
+        message: "Insufficient points",
+      });
+    }
+
+    // Deduct points from user's balance
+    user.point -= pointsToDeduct;
+    await user.save();
+
+    // Here, you can implement your logic for taking the exam, such as marking it as taken by the user,
+    // handling time limits, etc.
+
+    res.status(200).json({
+      success: true,
+      message: "Exam taken successfully",
+      // You can also include additional data in the response if needed
+    });
+  } catch (error) {
+    console.error("Error taking exam:", error);
+    res.status(500).json({
+      success: false,
+      message: "Error taking exam",
+      error: error.message,
+    });
+  }
+};
+
 module.exports = {
   createExamController,
   getExamsController,
   getExamByIdController,
   updateExamController,
   deleteExamController,
+  createTaskController,
+  deleteTaskController,
+  updateTaskController,
+  submitAnswerController,
+  takeExamController,
 };

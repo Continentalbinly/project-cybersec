@@ -1,24 +1,30 @@
 const mongoose = require("mongoose");
 
 const taskSchema = new mongoose.Schema({
-  lesson_id: {
+  examId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Exam",
+    required: true,
+  },
+  question: {
     type: String,
     required: true,
   },
-  title: {
-    type: String,
-    required: true,
-  },
-  description: {
-    type: String,
-    required: true,
-  },
-  answer: {
-    type: String,
-    required: true,
-  },
-  point: {
+  answers: [
+    {
+      answer: {
+        type: String,
+        required: true,
+      },
+      correct: {
+        type: Boolean,
+        required: true,
+      },
+    },
+  ],
+  score: {
     type: Number,
+    required: true,
   },
 });
 

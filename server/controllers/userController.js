@@ -1,6 +1,7 @@
 const JWT = require("jsonwebtoken");
 const { hashPassword, comparePassword } = require("../helpers/authHelper");
 const userModel = require("../models/userModel");
+const lessonModel = require("../models/lessonModel");
 var { expressjwt: jwt } = require("express-jwt");
 
 //middleware
@@ -223,6 +224,56 @@ const updateUserPointsController = async (req, res) => {
   }
 };
 
+// Update user points after submitting the correct answer
+const submitAnswerController = async (req, res) => {
+  try {
+    const { userId, lessonId, answer } = req.body;
+
+    // Fetch the lesson to get the correct answer and point value
+    const lesson = await lessonModel.findById(lessonId);
+    if (!lesson) {
+      return res.status(404).json({
+        success: false,
+        message: "Lesson not found",
+      });
+    }
+
+    // Check if the provided answer is correct
+    if (lesson.answer !== answer) {
+      return res.status(400).json({
+        success: false,
+        message: "Incorrect answer",
+      });
+    }
+
+    // Find user by userId
+    const user = await userModel.findById(userId);
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
+      });
+    }
+
+    // Update user points
+    user.point += lesson.point;
+    await user.save();
+
+    res.status(200).json({
+      success: true,
+      message: "Answer submitted successfully. Points added.",
+      user,
+    });
+  } catch (error) {
+    console.error("Error submitting answer:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Error submitting answer",
+      error: error.message,
+    });
+  }
+};
+
 //register user
 const updateUserController = async (req, res) => {
   try {
@@ -303,4 +354,5 @@ module.exports = {
   getAllUsersController,
   updateUserStatusController,
   updateUserPointsController,
+  submitAnswerController,
 };

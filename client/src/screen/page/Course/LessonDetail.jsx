@@ -90,7 +90,7 @@ else{
         </li>
       </ul>
       <div className="input-container">
-        <h3 className="text-xl font-bold mb-4">Submit Your Answers</h3>
+        <h3 className="text-xl font-bold mb-4">ສົ່ງຄຳຕອບ</h3>
         <input
           className="border border-gray-300 rounded-md px-4 py-2 mr-2"
           type="text"

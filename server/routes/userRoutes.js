@@ -6,7 +6,8 @@ const {
   getUserController,
   getAllUsersController,
   updateUserStatusController,
-  updateUserPointsController 
+  updateUserPointsController,
+  submitAnswerController,
 } = require("../controllers/userController");
 
 //router object
@@ -27,6 +28,8 @@ router.get("/fetchalluser", getAllUsersController);
 router.put("/update-user-status", updateUserStatusController);
 
 router.post("/update-user-points", updateUserPointsController);
+
+router.post("/submit-answer", submitAnswerController);
 
 //export
 module.exports = router;

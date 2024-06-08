@@ -12,6 +12,7 @@ import AdminRoutes from "./Routes/adminRotes";
 import RedeemShop from "./screen/page/RedeemShop";
 import Addcourse from "./screen/page/Admin/Page/components/Addcourse";
 import Exam from "./screen/page/Exam";
+import TakeExam from "./screen/page/ExaminationPage";
 import Lesson from "./screen/page/Course/CourseDetail";
 import Addlesson from "./screen/page/Admin/Page/components/Addlesson";
 import Editcourse from "./screen/page/Admin/Page/components/Editcourse";
@@ -32,6 +33,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/feuature" element={<Feuature />} />
             <Route path="/exam" element={<Exam />} />
+            <Route path="/exam/:examId" element={<TakeExam />} />
             <Route path="/redeemshop" element={<RedeemShop />} />
             <Route path="*" element={<Error />} />
             <Route path="/lesson/:id" element={<Lesson />} />

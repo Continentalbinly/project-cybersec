@@ -134,22 +134,22 @@ const RedeemController = () => {
               <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
                   <th scope="col" className="px-6 py-3">
-                    Redeem Name
+                    ລາຍການ
                   </th>
                   <th scope="col" className="px-6 py-3">
-                    User Name
+                    ຊື່
                   </th>
                   <th scope="col" className="px-6 py-3">
-                    Email
+                    ອີເມວ
                   </th>
                   <th scope="col" className="px-6 py-3">
-                    Express
+                    ຂົນສົ່ງ
                   </th>
                   <th scope="col" className="px-6 py-3">
-                    Location
+                    ສະຖານທີ່ຈັດສົ່ງ
                   </th>
                   <th scope="col" className="px-6 py-3">
-                    Phone
+                    ເບີຕິດຕໍ່
                   </th>
                   <th scope="col" className="px-6 py-3">
                     Action
@@ -225,25 +225,25 @@ const RedeemController = () => {
               <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
                   <th scope="col" className="px-6 py-3">
-                    Redeem Name
+                    ລາຍການ
                   </th>
                   <th scope="col" className="px-6 py-3">
-                    User Name
+                    ຊື່
                   </th>
                   <th scope="col" className="px-6 py-3">
-                    Email
+                    ອີເມວ
                   </th>
                   <th scope="col" className="px-6 py-3">
-                    Express
+                    ຂົນສົ່ງ
                   </th>
                   <th scope="col" className="px-6 py-3">
-                    Location
+                    ສະຖານທີ່ຈັດສົ່ງ
                   </th>
                   <th scope="col" className="px-6 py-3">
-                    Phone
+                    ເບີຕິດຕໍ່
                   </th>
                   <th scope="col" className="px-6 py-3">
-                    Status
+                    ສະຖານະ
                   </th>
                 </tr>
               </thead>

@@ -9,10 +9,17 @@ const examSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  mediumScore: {
+  requiredPoints: {
     type: Number,
-    default: null, // Optional field for medium score requirement
+    required: true,
+    default: 0,
   },
+  tasks: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Task",
+    },
+  ],
 });
 
 module.exports = mongoose.model("Exam", examSchema);

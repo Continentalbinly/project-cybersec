@@ -1,80 +1,96 @@
-import React, { useState, useEffect } from 'react';
-import { FaCheckCircle } from 'react-icons/fa';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { useAuthContext } from "../../hook/useAuth";
+import { useNavigate } from "react-router-dom";
+import ConfirmationModal from "./Modal/ConfirmationModal";
 
 function Exam() {
-  const [answers, setAnswers] = useState(Array(5).fill('')); // Assuming 5 SQL injection questions
-  const [collectEffect, setCollectEffect] = useState(false);
-  const [submittedIndexes, setSubmittedIndexes] = useState([]);
-
-  const handleAnswerChange = (index, value) => {
-    const newAnswers = [...answers];
-    newAnswers[index] = value;
-    setAnswers(newAnswers);
-  };
-
-  const handleSubmit = (index) => {
-    // Submit answer for a specific question
-    console.log(`Answer for question ${index + 1} submitted:`, answers[index]);
-    // You can implement your logic to submit answer to the server
-    if (answers[index].toLowerCase() === 'banana') {
-      setSubmittedIndexes([...submittedIndexes, index]);
-    } else {
-      // If answer is incorrect, you can set a flag to indicate incorrect submission
-      setAnswers([...answers]); // This line is to force a re-render
-      setSubmittedIndexes([...submittedIndexes]);
-    }
-  };
+  const [exams, setExams] = useState([]);
+  const [selectedExamId, setSelectedExamId] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { userData, setUserData } = useAuthContext();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    if (submittedIndexes.length === 5) {
-      setCollectEffect(true);
+    fetchExams();
+  }, []);
+
+  const fetchExams = async () => {
+    try {
+      const response = await axios.get("/exam/getexams");
+      setExams(response.data.exams);
+    } catch (error) {
+      console.error("Error fetching exams:", error);
     }
-  }, [submittedIndexes]);
+  };
+
+  const takeExam = async (examId, requiredPoints) => {
+    setSelectedExamId(examId);
+    setIsModalOpen(true);
+  };
+
+  const handleConfirmTakeExam = async () => {
+    try {
+      const userId = userData._id;
+      const pointsToDeduct = exams.find(
+        (exam) => exam._id === selectedExamId
+      ).requiredPoints;
+      const response = await axios.post(`/exam/take/${selectedExamId}`, {
+        userId,
+        pointsToDeduct,
+      });
+      console.log(response.data);
+      setIsModalOpen(false);
+      navigate(`/exam/${selectedExamId}`);
+    } catch (error) {
+      console.error("Error taking exam:", error);
+    }
+  };
+
+  const handleCancelTakeExam = () => {
+    setSelectedExamId(null);
+    setIsModalOpen(false);
+  };
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h2 className="text-3xl font-bold mb-4">SQL Injection Examination</h2>
-      <form>
-        <div className="mb-4">
-          <h3 className="text-xl font-bold">Question 1: What is SQL injection?</h3>
-          <input
-            className="border border-gray-300 rounded-md px-4 py-2 w-full"
-            type="text"
-            value={answers[0]}
-            onChange={(e) => handleAnswerChange(0, e.target.value)}
-            placeholder="Your answer..."
-          />
-          {submittedIndexes.includes(0) && (
-            <button
-              type="button"
-              className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-2 flex items-center"
-            >
-              <FaCheckCircle className="mr-2" />
-              correct
-            </button>
-          )}
-          {!submittedIndexes.includes(0) && (
-            <div>
+      <h1 className="text-3xl font-bold mb-8 text-center text-gray-300">
+        ບົດສອບເສັງ
+      </h1>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {exams.map((exam) => (
+          <div
+            key={exam._id}
+            className="bg-white shadow-md rounded-lg overflow-hidden border border-gray-200 hover:shadow-xl transition duration-300"
+          >
+            <div className="p-6">
+              <h2 className="text-xl font-semibold mb-4 text-gray-800">
+                ຫົວຂໍ້ສອບເສັງ: {exam.title}
+              </h2>
+              <p className="text-gray-600 mb-4">ລາຍລະອຽດ: {exam.description}</p>
+              <p className="text-gray-600 mb-4">
+                ຄະແນນທີ່ຕ້ອງການ: {exam.requiredPoints}
+              </p>
               <button
-                type="button"
-                onClick={() => handleSubmit(0)}
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2"
+                onClick={() => takeExam(exam._id, exam.requiredPoints)}
+                className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
               >
-                Submit
+                ເຂົ້າສອບເສັງ
               </button>
-              {answers[0].toLowerCase() !== 'banana' && (
-                <p className="text-red-500">Incorrect answer. Try again!</p>
-              )}
             </div>
-          )}
-        </div>
-        {/* Repeat similar structure for other questions */}
-      </form>
-      {collectEffect && (
-        <div className="mt-4 bg-green-200 p-4 rounded-md">
-          <p className="text-green-800 font-bold">Congratulations! You collected all bananas!</p>
-        </div>
-      )}
+          </div>
+        ))}
+      </div>
+      <ConfirmationModal
+        isOpen={isModalOpen}
+        onCancel={handleCancelTakeExam}
+        onConfirm={handleConfirmTakeExam}
+        requiredPoints={
+          selectedExamId
+            ? exams.find((exam) => exam._id === selectedExamId).requiredPoints
+            : 0
+        }
+      />
     </div>
   );
 }

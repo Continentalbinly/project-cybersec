@@ -5,23 +5,29 @@ const {
   getExamByIdController,
   updateExamController,
   deleteExamController,
+  createTaskController,
+  updateTaskController,
+  deleteTaskController,
+  submitAnswerController,
+  takeExamController, 
 } = require("../controllers/examController");
 
 const router = express.Router();
 
-// Create an exam
+// Exam routes
 router.post("/createexam", createExamController);
-
-// Get all exams
 router.get("/getexams", getExamsController);
-
-// Get exam by ID
 router.get("/:examId", getExamByIdController);
-
-// Update exam by ID
 router.put("/:examId", updateExamController);
-
-// Delete exam by ID
 router.delete("/:examId", deleteExamController);
+
+// Task routes
+router.post("/:examId/tasks", createTaskController);
+router.put("/tasks/:taskId", updateTaskController);
+router.delete("/tasks/:taskId", deleteTaskController);
+router.post("/:examId/submit", submitAnswerController);
+
+// Take exam route
+router.post("/take/:examId", takeExamController); 
 
 module.exports = router;
