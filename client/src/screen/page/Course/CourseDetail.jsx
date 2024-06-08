@@ -117,19 +117,19 @@ function Lesson() {
         <button
           onClick={handleBack}
           type="button"
-          class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
         >
           <svg
-            class="w-5 h-5 rtl:rotate-180"
+            className="w-5 h-5 rtl:rotate-180"
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
-            stroke-width="2.5"
+            strokeWidth="2.5"
             stroke="currentColor"
           >
             <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeLinecap="round"
+              strokeLinejoin="round"
               d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18"
             />
           </svg>
@@ -228,7 +228,30 @@ function Lesson() {
                     selectedLesson.detailcode.length > 0 && (
                       <div className="pt-5">
                         {selectedLesson.detailcode.map((detail, index) => (
-                          <p key={index}>*{detail.tittle}</p>
+                          <p key={index}>*{detail.title}</p>
+                        ))}
+                      </div>
+                    )}
+                  {selectedLesson.images &&
+                    selectedLesson.images.length > 0 && (
+                      <div className="pt-5">
+                        <h3 className="text-xl font-semibold">Images</h3>
+                        {selectedLesson.images.map((imageGroup, index) => (
+                          <div key={index} className="pt-3">
+                            {imageGroup.image.map((img, subIndex) => (
+                              <div key={subIndex}>
+                                <p className="font-semibold">{img.title}</p>
+                                {img.urls.map((urlObj, urlIndex) => (
+                                  <img
+                                    key={urlIndex}
+                                    src={urlObj.url}
+                                    alt={img.title}
+                                    className="w-full h-auto"
+                                  />
+                                ))}
+                              </div>
+                            ))}
+                          </div>
                         ))}
                       </div>
                     )}

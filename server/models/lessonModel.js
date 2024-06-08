@@ -3,15 +3,12 @@ const mongoose = require("mongoose");
 const lessonSchema = new mongoose.Schema({
   course_id: {
     type: String,
-    required: true,
   },
   header: {
     type: String,
-    required: true,
   },
   title: {
     type: String,
-    required: true,
   },
   examples: [
     {
@@ -51,30 +48,44 @@ const lessonSchema = new mongoose.Schema({
   ],
   detailcode: [
     {
-      tittle: {
+      title: {
         type: String,
       },
     },
   ],
   description: {
     type: String,
-    required: true,
   },
   lab: {
     type: String,
-    required: true,
   },
   question: {
     type: String,
-    required: true,
   },
   answer: {
     type: String,
-    required: true,
   },
   point: {
     type: Number,
   },
+  images: [
+    {
+      image: [
+        {
+          title: {
+            type: String,
+          },
+          urls: [
+            {
+              url: {
+                type: String,
+              },
+            },
+          ],
+        },
+      ],
+    },
+  ],
 });
 
 module.exports = mongoose.model("Lesson", lessonSchema);
