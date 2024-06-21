@@ -232,10 +232,9 @@ function Lesson() {
                         ))}
                       </div>
                     )}
-                  {selectedLesson.images &&
+                  {selectedLesson.images  &&
                     selectedLesson.images.length > 0 && (
                       <div className="pt-5">
-                        <h3 className="text-xl font-semibold">Images</h3>
                         {selectedLesson.images.map((imageGroup, index) => (
                           <div key={index} className="pt-3">
                             {imageGroup.image.map((img, subIndex) => (

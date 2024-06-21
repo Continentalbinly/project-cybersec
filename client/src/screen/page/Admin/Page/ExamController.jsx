@@ -35,6 +35,7 @@ function ExamController() {
 
   const handleEditExam = (exam) => {
     setSelectedExam(exam);
+    setShowTaskForm(false); // Close task form if open
     setShowExamForm(true);
   };
 
@@ -46,11 +47,13 @@ function ExamController() {
   const handleAddTask = (exam) => {
     setSelectedExam(exam);
     setSelectedTask(null);
+    setShowExamForm(false); // Close exam form if open
     setShowTaskForm(true);
   };
 
   const handleEditTask = (task) => {
     setSelectedTask(task);
+    setShowExamForm(false); // Close exam form if open
     setShowTaskForm(true);
   };
 
@@ -72,7 +75,11 @@ function ExamController() {
     <div>
       <h1 className="text-2xl font-semibold mb-4">Exam Controller</h1>
       <button
-        onClick={() => setShowExamForm(true)}
+        onClick={() => {
+          setSelectedExam(null);
+          setShowExamForm(true);
+          setShowTaskForm(false);
+        }}
         className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
       >
         Add New Exam

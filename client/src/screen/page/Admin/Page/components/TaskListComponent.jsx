@@ -1,43 +1,33 @@
 import React from "react";
 
-const TaskList = ({ tasks, onEdit, onDelete }) => {
-  if (!tasks || tasks.length === 0) {
-    console.log("No tasks available:", tasks);
-    return <div>No tasks available.</div>;
-  }
-
-  console.log("Rendering tasks:", tasks);
-
+const TaskListComponent = ({ tasks, onEdit, onDelete }) => {
   return (
     <div>
-      {tasks.map((task) => (
-        <div key={task._id} className="border p-4 rounded mb-4">
-          <h2 className="text-xl font-semibold">{task.question}</h2>
-          <ul>
-            {task.answers.map((answerObj, index) => (
-              <li key={index}>
-                {answerObj.answer} {answerObj.correct && "(Correct)"}
-              </li>
-            ))}
-          </ul>
-          <div className="mt-2">
-            <button
-              onClick={() => onEdit(task)}
-              className="bg-yellow-500 text-white px-4 py-2 rounded-md mr-2 hover:bg-yellow-600"
-            >
-              Edit
-            </button>
-            <button
-              onClick={() => onDelete(task._id)}
-              className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600"
-            >
-              Delete
-            </button>
+      {tasks && tasks.length > 0 ? (
+        tasks.map((task) => (
+          <div key={task._id} className="border p-2 rounded mb-2">
+            <p>{task.question}</p>
+            <div>
+              <button
+                onClick={() => onEdit(task)}
+                className="bg-yellow-500 text-white px-2 py-1 rounded-md mr-2 hover:bg-yellow-600"
+              >
+                Edit
+              </button>
+              <button
+                onClick={() => onDelete(task._id)}
+                className="bg-red-500 text-white px-2 py-1 rounded-md hover:bg-red-600"
+              >
+                Delete
+              </button>
+            </div>
           </div>
-        </div>
-      ))}
+        ))
+      ) : (
+        <p>No tasks available</p>
+      )}
     </div>
   );
 };
 
-export default TaskList;
+export default TaskListComponent;

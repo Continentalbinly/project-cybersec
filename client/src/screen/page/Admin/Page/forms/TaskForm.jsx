@@ -2,11 +2,21 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 const TaskForm = ({ examId, task, onClose, onRefresh }) => {
-  const [question, setQuestion] = useState(task ? task.question : "");
-  const [answers, setAnswers] = useState(
-    task ? task.answers : [{ answer: "", correct: false }]
-  );
-  const [score, setScore] = useState(task ? task.score : 0);
+  const [question, setQuestion] = useState("");
+  const [answers, setAnswers] = useState([{ answer: "", correct: false }]);
+  const [score, setScore] = useState(0);
+
+  useEffect(() => {
+    if (task) {
+      setQuestion(task.question);
+      setAnswers(task.answers);
+      setScore(task.score);
+    } else {
+      setQuestion("");
+      setAnswers([{ answer: "", correct: false }]);
+      setScore(0);
+    }
+  }, [task]);
 
   const handleAnswerChange = (index, value) => {
     const newAnswers = [...answers];
@@ -24,14 +34,12 @@ const TaskForm = ({ examId, task, onClose, onRefresh }) => {
     e.preventDefault();
     try {
       if (task) {
-        // Update task
         await axios.put(`/exam/tasks/${task._id}`, {
           question,
           answers,
           score,
         });
       } else {
-        // Create new task
         await axios.post(`/exam/${examId}/tasks`, { question, answers, score });
       }
       onRefresh();
@@ -111,7 +119,7 @@ const TaskForm = ({ examId, task, onClose, onRefresh }) => {
               type="submit"
               className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
             >
-              {task ? "Update Task" : "Create Task"}
+              {task ? "Update Task" : "Add Task"}
             </button>
           </div>
         </form>
