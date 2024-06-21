@@ -2,14 +2,13 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import ExamForm from "./forms/ExamForm";
 import TaskForm from "./forms/TaskForm";
-import TaskList from "./components/TaskListComponent";
+import TaskListComponent from "./components/TaskListComponent";
 
 function ExamController() {
   const [exams, setExams] = useState([]);
   const [selectedExam, setSelectedExam] = useState(null);
-  const [showExamForm, setShowExamForm] = useState(false);
-  const [showTaskForm, setShowTaskForm] = useState(false);
   const [selectedTask, setSelectedTask] = useState(null);
+  const [formType, setFormType] = useState(null); // "exam" or "task"
 
   useEffect(() => {
     fetchExams();
@@ -33,35 +32,6 @@ function ExamController() {
     }
   };
 
-  const handleEditExam = (exam) => {
-    setSelectedExam(exam);
-    setShowTaskForm(false); // Close task form if open
-    setShowExamForm(true);
-  };
-
-  const handleCloseExamForm = () => {
-    setSelectedExam(null);
-    setShowExamForm(false);
-  };
-
-  const handleAddTask = (exam) => {
-    setSelectedExam(exam);
-    setSelectedTask(null);
-    setShowExamForm(false); // Close exam form if open
-    setShowTaskForm(true);
-  };
-
-  const handleEditTask = (task) => {
-    setSelectedTask(task);
-    setShowExamForm(false); // Close exam form if open
-    setShowTaskForm(true);
-  };
-
-  const handleCloseTaskForm = () => {
-    setSelectedTask(null);
-    setShowTaskForm(false);
-  };
-
   const handleDeleteTask = async (taskId) => {
     try {
       await axios.delete(`/exam/tasks/${taskId}`);
@@ -71,15 +41,23 @@ function ExamController() {
     }
   };
 
+  const openForm = (type, exam = null, task = null) => {
+    setSelectedExam(exam);
+    setSelectedTask(task);
+    setFormType(type);
+  };
+
+  const closeForm = () => {
+    setSelectedExam(null);
+    setSelectedTask(null);
+    setFormType(null);
+  };
+
   return (
     <div>
       <h1 className="text-2xl font-semibold mb-4">Exam Controller</h1>
       <button
-        onClick={() => {
-          setSelectedExam(null);
-          setShowExamForm(true);
-          setShowTaskForm(false);
-        }}
+        onClick={() => openForm("exam")}
         className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
       >
         Add New Exam
@@ -91,7 +69,7 @@ function ExamController() {
             <p>{exam.description}</p>
             <div className="mt-2">
               <button
-                onClick={() => handleEditExam(exam)}
+                onClick={() => openForm("exam", exam)}
                 className="bg-yellow-500 text-white px-4 py-2 rounded-md mr-2 hover:bg-yellow-600"
               >
                 Edit
@@ -105,13 +83,13 @@ function ExamController() {
             </div>
             <div className="mt-4">
               <h3 className="text-lg font-semibold">Tasks</h3>
-              <TaskList
+              <TaskListComponent
                 tasks={exam.tasks}
-                onEdit={handleEditTask}
+                onEdit={(task) => openForm("task", exam, task)}
                 onDelete={handleDeleteTask}
               />
               <button
-                onClick={() => handleAddTask(exam)}
+                onClick={() => openForm("task", exam)}
                 className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 mt-2"
               >
                 Add Task
@@ -120,18 +98,18 @@ function ExamController() {
           </div>
         ))}
       </div>
-      {showExamForm && (
+      {formType === "exam" && (
         <ExamForm
           exam={selectedExam}
-          onClose={handleCloseExamForm}
+          onClose={closeForm}
           onRefresh={fetchExams}
         />
       )}
-      {showTaskForm && selectedExam && (
+      {formType === "task" && selectedExam && (
         <TaskForm
           examId={selectedExam._id}
           task={selectedTask}
-          onClose={handleCloseTaskForm}
+          onClose={closeForm}
           onRefresh={fetchExams}
         />
       )}
