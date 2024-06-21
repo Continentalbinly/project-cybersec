@@ -12,11 +12,15 @@ const TaskForm = ({ examId, task, onClose, onRefresh }) => {
       setAnswers(task.answers);
       setScore(task.score);
     } else {
-      setQuestion("");
-      setAnswers([{ answer: "", correct: false }]);
-      setScore(0);
+      resetForm();
     }
   }, [task]);
+
+  const resetForm = () => {
+    setQuestion("");
+    setAnswers([{ answer: "", correct: false }]);
+    setScore(0);
+  };
 
   const handleAnswerChange = (index, value) => {
     const newAnswers = [...answers];
