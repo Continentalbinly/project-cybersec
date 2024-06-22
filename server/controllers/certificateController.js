@@ -1,76 +1,139 @@
-const Certificate = require("../models/certificateModel");
+const mongoose = require("mongoose"); // Import mongoose
 
-// Request certificate
-const requestCertificateController = async (req, res) => {
-  const { userId, examId, score } = req.body;
+const Certificate = require("../models/certificateModel");
+const CertificateRequest = require("../models/certificateRequestModel");
+const User = require("../models/userModel"); // Adjusted import
+
+// Create a new certificate
+exports.createCertificate = async (req, res) => {
   try {
-    const certificate = await Certificate.create({ userId, examId, score });
-    res.status(201).json({
-      success: true,
-      message: "Certificate request created successfully",
-      certificate,
+    const certificate = new Certificate(req.body);
+    await certificate.save();
+    res.status(201).json(certificate);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
+// Get all certificates
+exports.getCertificates = async (req, res) => {
+  try {
+    const certificates = await Certificate.find();
+    res.status(200).json(certificates);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
+// Get a single certificate by ID
+exports.getCertificateById = async (req, res) => {
+  try {
+    const certificate = await Certificate.findById(req.params.id);
+    if (!certificate) {
+      return res.status(404).json({ message: "Certificate not found" });
+    }
+    res.status(200).json(certificate);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
+// Update a certificate
+exports.updateCertificate = async (req, res) => {
+  try {
+    const certificate = await Certificate.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true }
+    );
+    if (!certificate) {
+      return res.status(404).json({ message: "Certificate not found" });
+    }
+    res.status(200).json(certificate);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
+// Delete a certificate
+exports.deleteCertificate = async (req, res) => {
+  try {
+    const certificate = await Certificate.findByIdAndDelete(req.params.id);
+    if (!certificate) {
+      return res.status(404).json({ message: "Certificate not found" });
+    }
+    res.status(200).json({ message: "Certificate deleted successfully" });
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
+// Create a certificate request
+exports.createCertificateRequest = async (req, res) => {
+  const { userId, courseId } = req.body;
+
+  try {
+    // Fetch the certificate to get the minimum score
+    const certificate = await Certificate.findOne({ courseId });
+
+    if (!certificate) {
+      return res.status(404).json({ message: "Certificate not found" });
+    }
+
+    const minimumScore = certificate.minimumScore;
+
+    // Fetch the user by userId (which is a string)
+    const user = await User.findOne({ userId });
+
+    if (!user || user.score < minimumScore) {
+      return res
+        .status(400)
+        .json({ message: "User does not meet the minimum score requirement." });
+    }
+
+    // Deduct the minimum score from the user's total score
+    user.score -= minimumScore;
+    await user.save();
+
+    // Create the certificate request
+    const certificateRequest = new CertificateRequest({
+      userId: user.userId, // Assuming you want to store the userId in the request
+      courseId,
+      status: "Pending",
     });
+
+    await certificateRequest.save();
+    res.status(201).json(certificateRequest);
   } catch (error) {
     console.error("Error creating certificate request:", error);
-    res.status(500).json({
-      success: false,
-      message: "Error creating certificate request",
-      error: error.message,
-    });
+    res.status(500).json({ message: error.message });
   }
 };
 
 // Get all certificate requests
-const getCertificateRequestsController = async (req, res) => {
+exports.getCertificateRequests = async (req, res) => {
   try {
-    const certificateRequests = await Certificate.find({ approved: false });
-    res.status(200).json({
-      success: true,
-      message: "Certificate requests retrieved successfully",
-      certificateRequests,
-    });
+    const certificateRequests = await CertificateRequest.find()
+      .populate("userId") // Assuming userId is a reference to User model
+      .populate("courseId"); // Assuming courseId is a reference to another model if needed
+    res.status(200).json(certificateRequests);
   } catch (error) {
-    console.error("Error fetching certificate requests:", error);
-    res.status(500).json({
-      success: false,
-      message: "Error fetching certificate requests",
-      error: error.message,
-    });
+    res.status(400).json({ message: error.message });
   }
 };
 
-// Approve certificate request
-const approveCertificateController = async (req, res) => {
-  const { certificateId } = req.params;
+// Approve or reject a certificate request
+exports.updateCertificateRequestStatus = async (req, res) => {
   try {
-    const certificate = await Certificate.findByIdAndUpdate(
-      certificateId,
-      { approved: true },
-      { new: true }
-    );
-    if (!certificate) {
-      return res.status(404).json({
-        success: false,
-        message: "Certificate request not found",
-      });
+    const certificateRequest = await CertificateRequest.findById(req.params.id);
+    if (!certificateRequest) {
+      return res.status(404).json({ message: "Certificate request not found" });
     }
-    res.status(200).json({
-      success: true,
-      message: "Certificate request approved successfully",
-      certificate,
-    });
+    certificateRequest.status = req.body.status;
+    certificateRequest.adminResponseDate = Date.now();
+    await certificateRequest.save();
+    res.status(200).json(certificateRequest);
   } catch (error) {
-    console.error("Error approving certificate request:", error);
-    res.status(500).json({
-      success: false,
-      message: "Error approving certificate request",
-      error: error.message,
-    });
+    res.status(400).json({ message: error.message });
   }
-};
-
-module.exports = {
-  requestCertificateController,
-  getCertificateRequestsController,
-  approveCertificateController,
 };

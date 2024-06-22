@@ -186,7 +186,6 @@ const loginController = async (req, res) => {
 const updateUserPointsController = async (req, res) => {
   try {
     const { userId, pointsToDeduct } = req.body;
-
     // Find user by userId
     const user = await userModel.findById(userId);
     if (!user) {
