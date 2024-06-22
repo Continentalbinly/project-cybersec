@@ -68,12 +68,10 @@ function UserDashboard() {
             <p>
               {userData.userEmail}
             </p>
-            <p>ບົດບາດ: {userData.role}</p>
             <p>ສະຖານະ: {userData.status}</p>
             <p>ຄະແນນ: {userData.score}</p>
             <p>ແຕ້ມ: {userData.point}</p>
-            <p>ພາລະກິດ: {userData.task}</p>
-            <p>ຜ່ານການຝຶກ: {userData.finishTask}</p>
+            <p>ສະຖິຕິພາລະກິດ: {userData.task}</p>
           </div>
         )}
         <div className=" bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6 col-span-2">

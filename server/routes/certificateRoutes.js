@@ -1,19 +1,26 @@
 const express = require("express");
+const router = express.Router();
 const {
-  requestCertificateController,
-  getCertificateRequestsController,
-  approveCertificateController,
+  createCertificate,
+  getCertificates,
+  getCertificateById,
+  updateCertificate,
+  deleteCertificate,
+  createCertificateRequest,
+  getCertificateRequests,
+  updateCertificateRequestStatus
 } = require("../controllers/certificateController");
 
-const router = express.Router();
+// Certificate routes
+router.post("/create", createCertificate);
+router.get("/get", getCertificates);
+router.get("/:id", getCertificateById);
+router.put("/:id", updateCertificate);
+router.delete("/:id", deleteCertificate);
 
-// Request certificate
-router.post("/request", requestCertificateController);
-
-// Get all certificate requests (admin)
-router.get("/requests", getCertificateRequestsController);
-
-// Approve certificate request (admin)
-router.put("/approve/:certificateId", approveCertificateController);
+// Certificate request routes
+router.post("/request/post", createCertificateRequest); // Create a certificate request
+router.get("/request/get", getCertificateRequests); // Get all certificate requests
+router.put("/request/get/:id", updateCertificateRequestStatus); // Update certificate request status
 
 module.exports = router;
