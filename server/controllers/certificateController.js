@@ -73,6 +73,18 @@ exports.createCertificateRequest = async (req, res) => {
   const { userId, courseId } = req.body;
 
   try {
+    // Check if there's a pending or approved certificate request for the user
+    const existingRequest = await CertificateRequest.findOne({
+      userId,
+      status: { $in: ["Pending", "Approved"] },
+    });
+
+    if (existingRequest) {
+      return res.status(407).json({
+        message: "You already have a pending or approved certificate request.",
+      });
+    }
+
     // Fetch the certificate to get the minimum score
     const certificate = await Certificate.findOne({ courseId });
 
@@ -87,10 +99,9 @@ exports.createCertificateRequest = async (req, res) => {
 
     if (!user || user.score < minimumScore) {
       return res
-        .status(400)
+        .status(403)
         .json({ message: "User does not meet the minimum score requirement." });
     }
-
     // Deduct the minimum score from the user's total score
     user.score -= minimumScore;
     await user.save();

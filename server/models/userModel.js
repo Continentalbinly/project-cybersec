@@ -46,14 +46,40 @@ const userSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
-    task: {
-      type: Number,
-      default: 0,
-    },
-    finishTask: {
-      type: Number,
-      default: 0,
-    },
+    taskTaken: [
+      {
+        lessonId: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Lesson",
+          required: true,
+        },
+        correctAnswer: {
+          type: Boolean,
+          default: false,
+        },
+        createdAt: {
+          type: Date,
+          default: Date.now,
+        },
+      },
+    ],
+    examsStatistics: [
+      {
+        examId: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Exam",
+          required: true,
+        },
+        score: {
+          type: Number,
+          default: 0,
+        },
+        createdAt: {
+          type: Date,
+          default: Date.now,
+        },
+      },
+    ],
     userImg: {
       type: String,
       default:
@@ -63,7 +89,14 @@ const userSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
+    examsTaken: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Exam",
+      },
+    ],
   },
   { timestamps: true }
 );
+
 module.exports = mongoose.model("User", userSchema);

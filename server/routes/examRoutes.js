@@ -10,6 +10,7 @@ const {
   deleteTaskController,
   submitAnswerController,
   takeExamController, 
+  getUserExamsController,
 } = require("../controllers/examController");
 
 const router = express.Router();
@@ -29,5 +30,8 @@ router.post("/:examId/submit", submitAnswerController);
 
 // Take exam route
 router.post("/take/:examId", takeExamController); 
+
+// Route to fetch exams taken by user
+router.get("/user/:userId/exams", getUserExamsController);
 
 module.exports = router;
