@@ -187,7 +187,7 @@ function AdminOperatorPage() {
         </button>
       </div>
 
-      <div className="bg-white p-6 rounded-lg shadow-md mb-6 text-white">
+      {/* <div className="bg-white p-6 rounded-lg shadow-md mb-6 text-white">
         <h2 className="text-2xl font-semibold mb-4 text-black">
           Create Certificate Request
         </h2>
@@ -215,7 +215,7 @@ function AdminOperatorPage() {
         >
           Create Request
         </button>
-      </div>
+      </div> */}
 
       <div className="bg-white p-6 rounded-lg shadow-md mb-6 text-black">
         <h2 className="text-2xl font-semibold mb-4">Certificate List</h2>

@@ -75,7 +75,7 @@ function Lesson() {
       const authData = JSON.parse(localStorage.getItem("@auth"));
       const token = authData?.token;
       const response = await axios.post(
-        "/auth/submit-answer",
+        "http://localhost:8080/api/v1/lesson/submitAnswer",
         {
           userId: userData._id,
           lessonId: selectedLesson._id,
@@ -87,6 +87,7 @@ function Lesson() {
           },
         }
       );
+
       if (response.data.success) {
         alert("Correct answer! Points added.");
         setUserPoints(response.data.user.point);
@@ -95,8 +96,18 @@ function Lesson() {
         alert("Incorrect answer. Try again.");
       }
     } catch (error) {
-      if (error.response && error.response.status === 400) {
-        alert("Incorrect answer. Try again.");
+      console.error("Error details:", error);
+      if (error.response) {
+        console.error("Error response data:", error.response.data);
+        if (error.response.status === 409) {
+          alert(
+            "You have already submitted the correct answer for this lesson."
+          );
+        } else if (error.response.status === 400) {
+          alert("Incorrect answer. Try again.");
+        } else {
+          alert("Error submitting answer.");
+        }
       } else {
         alert("Error submitting answer.");
       }
@@ -232,7 +243,7 @@ function Lesson() {
                         ))}
                       </div>
                     )}
-                  {selectedLesson.images  &&
+                  {selectedLesson.images &&
                     selectedLesson.images.length > 0 && (
                       <div className="pt-5">
                         {selectedLesson.images.map((imageGroup, index) => (

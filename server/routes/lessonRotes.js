@@ -5,8 +5,10 @@ const {
   getLessonByIdController,
   updateLessonController,
   deleteLessonController,
-  getLessonDetailByIdController, // Add this import
+  getLessonDetailByIdController,
 } = require("../controllers/lessonController");
+
+const { submitAnswerController } = require("../controllers/answerController"); // Import the controller
 
 const router = express.Router();
 
@@ -20,12 +22,15 @@ router.get("/getlessons", getLessonsController);
 router.get("/:courseId", getLessonByIdController);
 
 // Get lesson detail by lesson ID
-router.get("/detail/:lessonId", getLessonDetailByIdController); 
+router.get("/detail/:lessonId", getLessonDetailByIdController);
 
 // Update lesson by ID
 router.put("/:lessonId", updateLessonController);
 
 // Delete lesson by ID
 router.delete("/:lessonId", deleteLessonController);
+
+// Submit answer for a lesson
+router.post("/submitAnswer", submitAnswerController); // Add this route
 
 module.exports = router;

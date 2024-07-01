@@ -264,6 +264,26 @@ const submitAnswerController = async (req, res) => {
       });
     }
     user.score += totalScore; // Add the score to user's points
+
+    // Update exams statistics
+    const examStatisticsIndex = user.examsStatistics.findIndex(
+      (stat) => stat.examId.toString() === examId
+    );
+
+    const currentDate = new Date();
+
+    if (examStatisticsIndex !== -1) {
+      // If the user has already taken this exam, update the score and createdAt
+      user.examsStatistics[examStatisticsIndex].score += totalScore;
+    } else {
+      // Otherwise, add a new entry for this exam
+      user.examsStatistics.push({
+        examId: examId,
+        score: totalScore,
+        createdAt: currentDate,
+      });
+    }
+
     await user.save();
 
     res.status(200).json({
@@ -285,12 +305,10 @@ const submitAnswerController = async (req, res) => {
 // Take an exam
 const takeExamController = async (req, res) => {
   const { examId } = req.params;
+  const { userId, pointsToDeduct } = req.body;
 
   try {
-    // Fetch the exam by ID
     const exam = await Exam.findById(examId);
-
-    // Check if the exam exists
     if (!exam) {
       return res.status(404).json({
         success: false,
@@ -298,10 +316,6 @@ const takeExamController = async (req, res) => {
       });
     }
 
-    // Extract userId and pointsToDeduct from the request body
-    const { userId, pointsToDeduct } = req.body;
-
-    // Fetch the user by userId
     const user = await User.findById(userId);
     if (!user) {
       return res.status(404).json({
@@ -310,7 +324,14 @@ const takeExamController = async (req, res) => {
       });
     }
 
-    // Validate if user has enough points
+    // Check if the user has already taken the exam
+    if (user.examsTaken.includes(examId)) {
+      return res.status(400).json({
+        success: false,
+        message: "You have already taken this exam",
+      });
+    }
+
     if (user.point < pointsToDeduct) {
       return res.status(400).json({
         success: false,
@@ -318,17 +339,13 @@ const takeExamController = async (req, res) => {
       });
     }
 
-    // Deduct points from user's balance
     user.point -= pointsToDeduct;
+    user.examsTaken.push(examId);
     await user.save();
-
-    // Here, you can implement your logic for taking the exam, such as marking it as taken by the user,
-    // handling time limits, etc.
 
     res.status(200).json({
       success: true,
       message: "Exam taken successfully",
-      // You can also include additional data in the response if needed
     });
   } catch (error) {
     console.error("Error taking exam:", error);
@@ -339,6 +356,36 @@ const takeExamController = async (req, res) => {
     });
   }
 };
+//get User Taken Exam
+const getUserExamsController = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const user = await User.findById(userId).populate("examsTaken");
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "User exams retrieved successfully",
+      examsTaken: user.examsTaken,
+    });
+  } catch (error) {
+    console.error("Error fetching user exams:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Error fetching user exams",
+      error: error.message,
+    });
+  }
+};
+
+
+
 
 module.exports = {
   createExamController,
@@ -351,4 +398,5 @@ module.exports = {
   updateTaskController,
   submitAnswerController,
   takeExamController,
+  getUserExamsController,
 };

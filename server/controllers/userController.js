@@ -223,7 +223,7 @@ const updateUserPointsController = async (req, res) => {
   }
 };
 
-// Update user points after submitting the correct answer
+// Update user points and save task taken after submitting the correct answer
 const submitAnswerController = async (req, res) => {
   try {
     const { userId, lessonId, answer } = req.body;
@@ -256,11 +256,31 @@ const submitAnswerController = async (req, res) => {
 
     // Update user points
     user.point += lesson.point;
+
+    // Save task taken with correct answer
+    const taskId = lessonId; // Assuming lessonId is used as taskId for simplicity
+    const correctAnswer = answer;
+    
+    // Check if the task is already taken
+    const existingTaskIndex = user.taskTaken.findIndex(
+      (task) => task.taskId.toString() === taskId
+    );
+
+    if (existingTaskIndex === -1) {
+      // Add the task to taskTaken array if not already taken
+      user.taskTaken.push({
+        taskId,
+        correctAnswer,
+      });
+    }
+
+    // Save the updated user document
     await user.save();
 
+    // Send response
     res.status(200).json({
       success: true,
-      message: "Answer submitted successfully. Points added.",
+      message: "Answer submitted successfully. Points added and task taken saved.",
       user,
     });
   } catch (error) {
@@ -272,6 +292,7 @@ const submitAnswerController = async (req, res) => {
     });
   }
 };
+
 
 //register user
 const updateUserController = async (req, res) => {
@@ -343,6 +364,7 @@ const updateUserStatusController = async (req, res) => {
     });
   }
 };
+
 
 module.exports = {
   requireSignIn,
